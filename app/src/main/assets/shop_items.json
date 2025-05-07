@@ -1,0 +1,50 @@
+[
+  {
+    "imageResId": "garnet",
+    "price": 180,
+    "discountText": "",
+    "formattedPrice": "$0.99"
+  },
+  {
+    "imageResId": "garnet",
+    "price": 400,
+    "discountText": "10% OFF",
+    "formattedPrice": "$1.99"
+  },
+  {
+    "imageResId": "garnet",
+    "price": 700,
+    "discountText": "15% OFF",
+    "formattedPrice": "$5.99"
+  },
+  {
+    "imageResId": "garnet",
+    "price": 1500,
+    "discountText": "20% OFF",
+    "formattedPrice": "$9.99"
+  },
+  {
+    "imageResId": "garnet",
+    "price": 4000,
+    "discountText": "25% OFF",
+    "formattedPrice": "$19.99"
+  },
+  {
+    "imageResId": "garnet",
+    "price": 10000,
+    "discountText": "30% OFF",
+    "formattedPrice": "$49.99"
+  },
+  {
+    "imageResId": "garnet",
+    "price": 50000,
+    "discountText": "35% OFF",
+    "formattedPrice": "$99.99"
+  },
+  {
+    "imageResId": "garnet",
+    "price": 1000000,
+    "discountText": "55% OFF",
+    "formattedPrice": "$499.99"
+  }
+]

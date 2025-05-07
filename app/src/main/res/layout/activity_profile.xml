@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:background="@drawable/main_bg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProfileActivity">
+
+    <!-- Bouton de retour -->
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/navy_menu_background"
+        android:src="@drawable/ic_back"
+        android:contentDescription="Retour"
+        android:padding="4dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        app:tint="@color/black" />
+
+    <!-- Conteneur Profil -->
+    <LinearLayout
+        android:id="@+id/profileContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="24dp"
+        android:padding="16dp"
+        android:background="@drawable/bg_container"
+        android:layout_centerInParent="true">
+
+        <!-- Titre -->
+        <TextView
+            android:id="@+id/titleProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Profil"
+            android:textSize="24sp"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:layout_gravity="center"/>
+
+        <!-- Image + nom -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/profileImage"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/navy_menu_background4"
+                android:padding="2dp"
+                android:src="@drawable/profile" />
+
+            <EditText
+                android:id="@+id/editUsername"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:layout_weight="1"
+                android:layout_marginStart="12dp"
+                android:hint="@string/NomUtilisation"
+                android:background="@drawable/bg_edittext"
+                android:padding="8dp"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#CCCCCC" />
+
+
+            <ImageView
+                android:id="@+id/editIcon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="8dp"
+                android:src="@drawable/save"
+                app:tint="@color/white" />
+        </LinearLayout>
+
+        <!-- Onglets Avatar/Honneur
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="24dp">
+
+            <TextView
+                android:id="@+id/tabAvatar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Avatar"
+                android:gravity="center"
+                android:padding="8dp"
+                android:background="@drawable/bg_tab_selected"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/tabHonneur"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Honneur"
+                android:gravity="center"
+                android:padding="8dp"
+                android:background="@drawable/bg_tab_unselected"
+                android:textColor="#CCCCCC"/>
+        </LinearLayout>
+-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/blurred_text_color"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"/>
+        <!-- Grille d'avatars -->
+        <GridView
+            android:id="@+id/avatarGrid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:numColumns="3"
+            android:verticalSpacing="12dp"
+            android:horizontalSpacing="12dp"
+            android:stretchMode="columnWidth"
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

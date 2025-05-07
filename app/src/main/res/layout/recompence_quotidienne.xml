@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#80000000">
+
+    <!-- Boîte principale -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_rewards"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="24dp"
+        android:elevation="10dp"
+        app:cardCornerRadius="24dp"
+        android:background="@drawable/navy_blue_bg"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Titre -->
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Récompenses quotidiennes"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="12dp" />
+
+            <!-- Grille des récompenses -->
+            <GridLayout
+                android:id="@+id/grid_rewards"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="3"
+                android:alignmentMode="alignMargins"
+                android:rowCount="3"
+                android:useDefaultMargins="true">
+
+                <!-- Exemple Jour 1 -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_columnWeight="1"
+                    android:gravity="center"
+                    android:background="#33000000"
+                    android:layout_margin="4dp"
+                    android:backgroundTint="#33000000">
+
+                    <TextView
+                        android:text="Jour 1"
+                        android:textColor="#FFFFFF"
+                        android:gravity="center"
+                        android:textSize="14sp"
+                        android:background="@color/navy_blue"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"/>
+
+                    <ImageView
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@drawable/ic_check_circle"
+                        android:layout_marginTop="4dp"
+                        app:tint="#00FF00" />
+                </LinearLayout>
+
+            </GridLayout>
+
+
+            <!-- Bonus Vidéo -->
+            <Button
+                android:id="@+id/btn_video_reward"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="#00CC00"
+                android:text="Obtenir X3 avec la vidéo +360"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold" />
+
+            <!-- Bouton Réclamation -->
+            <Button
+                android:id="@+id/btn_claim"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="#990099"
+                android:text="Réclamation"
+                android:textColor="#FFFFFF"
+                android:enabled="false" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Bouton de fermeture -->
+    <ImageButton
+        android:id="@+id/btn_close2"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:padding="6dp"
+        android:layout_margin="12dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_close"
+        app:layout_constraintTop_toTopOf="@id/card_rewards"
+        app:layout_constraintEnd_toEndOf="@id/card_rewards"
+        app:tint="@android:color/white"
+        android:contentDescription="Fermer la fenêtre" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

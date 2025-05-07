@@ -1,0 +1,152 @@
+[
+  {
+    "id": 0,
+    "nom": "niveau_1",
+    "iconeTache": "R.drawable.coins",
+    "iconeCadeau": "R.drawable.coins",
+    "progress": 1,
+    "max": 1,
+    "recompence": 2,
+    "condition": 4,
+    "status": false
+  },
+  {
+    "id": 1,
+    "nom": "niveau_5",
+    "iconeTache": "R.drawable.coins",
+    "iconeCadeau": "R.drawable.garnet",
+    "progress": 0,
+    "max": 5,
+    "recompence": 5,
+    "condition": 4,
+    "status": false
+  },
+  {
+    "id": 2,
+    "nom": "niveau_10",
+    "iconeTache": "R.drawable.coins",
+    "iconeCadeau": "R.drawable.garnet",
+    "progress": 0,
+    "max": 10,
+    "recompence": 10,
+    "condition": 4,
+    "status": false
+  },
+  {
+    "id": 3,
+    "nom": "niveau_15",
+    "iconeTache": "R.drawable.coins",
+    "iconeCadeau": "R.drawable.garnet",
+    "progress": 0,
+    "max": 15,
+    "recompence": 15,
+    "condition": 4,
+    "status": false
+  },
+  {
+    "id": 4,
+    "nom": "niveau_20",
+    "iconeTache": "R.drawable.coins",
+    "iconeCadeau": "R.drawable.garnet",
+    "progress": 0,
+    "max": 20,
+    "recompence": 20,
+    "condition": 4,
+    "status": false
+  },
+
+  {
+    "id": 5,
+    "nom": "etoil_3",
+    "iconeTache": "R.drawable.coins",
+    "iconeCadeau": "R.drawable.garnet",
+    "progress": 3,
+    "max": 3,
+    "recompence": 5,
+    "condition": 5,
+    "status": false
+  },
+
+  {
+    "id": 6,
+    "nom": "etoil_5",
+    "iconeTache": "R.drawable.coins",
+    "iconeCadeau": "R.drawable.garnet",
+    "progress": 0,
+    "max": 5,
+    "recompence": 5,
+    "condition": 5,
+    "status": false
+  },
+
+  {
+    "id": 7,
+    "nom": "etoil_10",
+    "iconeTache": "R.drawable.coins",
+    "iconeCadeau": "R.drawable.garnet",
+    "progress": 0,
+    "max": 10,
+    "recompence": 10,
+    "condition": 5,
+    "status": false
+  },
+
+  {
+    "id": 8,
+    "nom": "etoil_15",
+    "iconeTache": "R.drawable.coins",
+    "iconeCadeau": "R.drawable.garnet",
+    "progress": 0,
+    "max": 15,
+    "recompence": 10,
+    "condition": 5,
+    "status": false
+  },
+
+  {
+    "id": 9,
+    "nom": "etoil_20",
+    "iconeTache": "R.drawable.coins",
+    "iconeCadeau": "R.drawable.garnet",
+    "progress": 0,
+    "max": 20,
+    "recompence": 15,
+    "condition": 5,
+    "status": false
+  },
+
+  {
+    "id": 10,
+    "nom": "depense_100",
+    "iconeTache": "R.drawable.coins",
+    "iconeCadeau": "R.drawable.garnet",
+    "progress": 100,
+    "max": 100,
+    "recompence": 100,
+    "condition": 4,
+    "status": false
+  },
+
+  {
+    "id": 11,
+    "nom": "depense_200",
+    "iconeTache": "R.drawable.coins",
+    "iconeCadeau": "R.drawable.garnet",
+    "progress": 0,
+    "max": 200,
+    "recompence": 100,
+    "condition": 3,
+    "status": false
+  },
+  {
+    "id": 12,
+    "nom": "depense_500",
+    "iconeTache": "R.drawable.coins",
+    "iconeCadeau": "R.drawable.garnet",
+    "progress": 0,
+    "max": 500,
+    "recompence": 100,
+    "condition": 3,
+    "status": false
+  }
+]

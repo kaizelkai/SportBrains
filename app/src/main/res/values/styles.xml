@@ -7,4 +7,9 @@
         <item name="android:background">@drawable/circle_background</item> <!-- Optionnel si vous avez un fond rond -->
     </style>
 
+    <style name="CircularImageView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
 </resources>

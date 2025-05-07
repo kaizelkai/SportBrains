@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base Theme: hérite de AppCompat -->
-    <style name="Base.Theme.SportBrain" parent="Theme.AppCompat.DayNight.NoActionBar">
+    <style name="Base.Theme.SportBrains" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Couleur personnalisée -->
         <item name="colorPrimary">@color/navy_blue</item>
         <item name="colorPrimaryDark">@color/navy_blue</item>
@@ -9,7 +9,7 @@
     </style>
 
     <!-- Thème utilisé dans le manifeste -->
-    <style name="Theme.SportBrain" parent="Base.Theme.SportBrain">
+    <style name="Theme.SportBrain" parent="Base.Theme.SportBrains">
         <item name="android:windowTranslucentNavigation">true</item>
     </style>
 

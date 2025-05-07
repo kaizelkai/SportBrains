@@ -10,7 +10,11 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import kabre.m2.sportbrains.Manager.LocaleHelper
 import kabre.m2.sportbrains.Manager.MusicManager
+import kabre.m2.sportbrains.Model.NombreEtoile
+import kabre.m2.sportbrains.Model.Tache
 import kabre.m2.sportbrains.Model.UserModel
+import kabre.m2.sportbrains.TraitementJson.Stars
+import kabre.m2.sportbrains.TraitementJson.Taches
 import kabre.m2.sportbrains.TraitementJson.User
 import kabre.m2.sportbrains.databinding.ActivityMainBinding
 
@@ -20,6 +24,12 @@ class MainActivity : AppCompatActivity() {
     private var user: UserModel? = null
 
     private val userHandler: User by lazy { User() }
+
+    private val tacheHandler: Taches by lazy { Taches() }
+    private  var taches: List<Tache>? = null
+
+    var etoileList: List<NombreEtoile> = emptyList()
+    private val traitementStar: Stars by lazy { Stars() }
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(LocaleHelper.onAttach(newBase))
@@ -74,6 +84,26 @@ class MainActivity : AppCompatActivity() {
             // Update score
             binding.currentScore.text = it.score.toString()
         }
+
+        tacheCompleted()
+
+    }
+
+    fun tacheCompleted() {
+        // Charger les données d'étoiles
+        etoileList = traitementStar.loadEtoileData(this, 1)
+
+        // Calculer la somme des étoiles
+        val totalStars = etoileList.sumOf { it.NbEtoile }
+
+        // Charger les tâches
+        taches = tacheHandler.loadQuestData(this, user?.score ?: 0, totalStars, user?.scoreDepence ?: 0)?.toMutableList() ?: mutableListOf()
+
+        // Vérifie si au moins une tâche est complétée
+        val isTacheComplete = taches!!.any { it.progress == it.max && it.statusss }
+
+        // Affiche ou masque l'animation selon l'état des tâches
+            binding.lottieBackgroundTache.visibility = if (isTacheComplete) View.VISIBLE else View.INVISIBLE
     }
 
     fun View.onClickOpen(context: Context, target: Class<*>) {

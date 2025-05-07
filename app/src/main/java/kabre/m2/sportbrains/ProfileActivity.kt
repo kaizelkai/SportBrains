@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import androidx.activity.addCallback
@@ -12,10 +13,17 @@ import com.bumptech.glide.Glide
 import kabre.m2.sportbrains.Adaptater.AvatarAdapter
 import kabre.m2.sportbrains.Manager.LocaleHelper
 import kabre.m2.sportbrains.Manager.MusicManager
+import kabre.m2.sportbrains.Model.UserModel
+import kabre.m2.sportbrains.TraitementJson.User
 import kabre.m2.sportbrains.databinding.ActivityProfileBinding
 
 class ProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileBinding
+
+    private var user: UserModel? = null
+    private val userHandler: User by lazy { User() }
+
+    var imageName=""
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(LocaleHelper.onAttach(newBase))
@@ -37,6 +45,17 @@ class ProfileActivity : AppCompatActivity() {
         binding.backButton.setOnClickListener {
             MusicManager.sonClick(context = this@ProfileActivity)
             startActivity(Intent(this, MainActivity::class.java))
+        }
+
+        binding.saveProfile.setOnClickListener {
+            MusicManager.sonClick(context = this@ProfileActivity)
+            saveProfileImage()
+        }
+// Charger les données utilisateur depuis le stockage interne ou `assets`
+        user = userHandler.loadUserData(this)
+        user?.let {
+            // Update name
+            binding.editUsername.setText(it.name)
         }
 
         val avatarList = listOf(
@@ -67,6 +86,8 @@ class ProfileActivity : AppCompatActivity() {
         binding.avatarGrid.setOnItemClickListener { _, _, position, _ ->
             MusicManager.sonClick(context = this@ProfileActivity)
             val selectedImageRes = avatarList[position]
+            imageName = getProfileImageName(selectedImageRes)
+            Log.d("AvatarSelected", "Nom de l’image sélectionnée : $imageName")
 
             Glide.with(this)
                 .load(selectedImageRes)
@@ -80,6 +101,21 @@ class ProfileActivity : AppCompatActivity() {
             saveProfileImageResId(selectedImageRes)
         }
     }
+    private fun getProfileImageName(resId: Int): String {
+        return resources.getResourceEntryName(resId)
+    }
+
+    fun saveProfileImage() {
+
+        user?.apply {
+            name = binding.editUsername.text.toString()
+            pic = imageName
+
+            // Sauvegarder les données utilisateur
+            userHandler.updateUserData(this@ProfileActivity, this)
+        }
+    }
+
 
     private fun getCurrentProfileImageResId(): Int {
         val prefs = getSharedPreferences("profile", MODE_PRIVATE)

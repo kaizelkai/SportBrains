@@ -73,7 +73,7 @@ class ActivitySplash : AppCompatActivity() {
         val icon = binding.progressIcon
         handler.post(object : Runnable {
             override fun run() {
-                if (progressStatus <= 100) {
+                if (progressStatus <= 96) {
                     progressBar.progress = progressStatus
 
                     // Calcule la nouvelle position en X

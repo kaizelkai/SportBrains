@@ -2,9 +2,11 @@ package kabre.m2.sportbrains.Manager
 
 import android.app.Application
 import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import java.time.LocalDate
 
 class MyApplication : Application(), Application.ActivityLifecycleCallbacks {
 
@@ -14,6 +16,9 @@ class MyApplication : Application(), Application.ActivityLifecycleCallbacks {
     override fun onCreate() {
         super.onCreate()
         registerActivityLifecycleCallbacks(this)
+
+        // Réinitialisation des progrès si nécessaire dès le lancement
+        //resetProgressIfNeeded()
     }
 
     override fun onActivityStarted(activity: Activity) {
@@ -48,6 +53,19 @@ class MyApplication : Application(), Application.ActivityLifecycleCallbacks {
             MusicManager.pauseMusic()
         }
     }
+
+    private fun resetProgressIfNeeded() {
+        val prefs = getSharedPreferences("questPrefs", Context.MODE_PRIVATE)
+        val lastResetDate = prefs.getString("last_reset_date", "")
+        val today = LocalDate.now().toString()
+
+        if (lastResetDate != today) {
+            Log.d("MyApplication", "Réinitialisation des progressions (nouvelle journée)")
+            QuestRepository.resetAllProgress(applicationContext)
+            prefs.edit().putString("last_reset_date", today).apply()
+        }
+    }
+
 
     // Les autres peuvent rester vides
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {}

@@ -17,6 +17,7 @@ class ActivitySplash : AppCompatActivity() {
     private lateinit var binding: ActivitySplashBinding
     private var progressStatus = 0
     private val handler = Handler(Looper.getMainLooper())
+
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(LocaleHelper.onAttach(newBase))
     }
@@ -26,7 +27,6 @@ class ActivitySplash : AppCompatActivity() {
 
         // Démarrer la musique de fond
         MusicManager.startMusic(this)
-
 
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -68,7 +68,6 @@ class ActivitySplash : AppCompatActivity() {
         // Ne pas appeler super.onBackPressed() pour empêcher la fermeture immédiate
     }
 
-
     private fun startProgressBar() {
         val progressBar = binding.progressBar
         val icon = binding.progressIcon
@@ -102,5 +101,4 @@ class ActivitySplash : AppCompatActivity() {
             }
         })
     }
-
 }

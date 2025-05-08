@@ -5,37 +5,37 @@ import android.os.Parcelable
 
 data class QuestModel(
     val id: Int,
-    val questPic: String?,
-    val description: String?,
-    val completeNb: Int,
-    var currentcCompleteNb: Int,
-    val recompencePic: String?,
+    val nom: String,
+    val iconeTache: String,
+    val iconeCadeau: String,
+    var progress: Int,
+    val max: Int,
     val recompence: Int,
-    val condition:Int,
-    var status: Int
+    val condition: Int,
+    var statusss: Boolean
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
-        parcel.readString(),
-        parcel.readString(),
+        parcel.readString() ?: "",
+        parcel.readString() ?: "",
+        parcel.readString() ?: "",
         parcel.readInt(),
         parcel.readInt(),
-        parcel.readString(),
         parcel.readInt(),
         parcel.readInt(),
-        parcel.readInt()
+        parcel.readBoolean()
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(id)
-        parcel.writeString(questPic)
-        parcel.writeString(description)
-        parcel.writeInt(completeNb)
-        parcel.writeInt(currentcCompleteNb)
-        parcel.writeString(recompencePic)
+        parcel.writeString(nom)
+        parcel.writeString(iconeTache)
+        parcel.writeString(iconeCadeau)
+        parcel.writeInt(progress)
+        parcel.writeInt(max)
         parcel.writeInt(recompence)
         parcel.writeInt(condition)
-        parcel.writeInt(status)
+        parcel.writeBoolean(statusss)
     }
 
     override fun describeContents(): Int = 0

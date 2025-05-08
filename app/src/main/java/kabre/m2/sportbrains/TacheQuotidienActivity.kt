@@ -34,6 +34,8 @@ class TacheQuotidienActivity : AppCompatActivity() {
     private val traitementStar: Stars by lazy { Stars() }
     private lateinit var tacheList: MutableList<Tache>
 
+    private val jsonFileName = "taches_quotidiennes.json"
+
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(LocaleHelper.onAttach(newBase))
     }
@@ -74,6 +76,7 @@ class TacheQuotidienActivity : AppCompatActivity() {
 
         binding.leaderView.layoutManager = LinearLayoutManager(this)
         binding.leaderView.adapter = TacheAdapter(
+            jsonFileName,
             tacheList,
             onTacheCompleted = { completed ->
                 completedTasks += completed

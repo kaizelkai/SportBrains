@@ -18,8 +18,8 @@ import kabre.m2.sportbrains.Model.Tache
 import kabre.m2.sportbrains.R
 import java.io.OutputStreamWriter
 
-
 class TacheAdapter(
+    private val jsonFileName: String,
     private val tacheList: MutableList<Tache>,
     private val onTacheCompleted: (Int) -> Unit,
     private val recompense: (Int) -> Unit,
@@ -27,7 +27,6 @@ class TacheAdapter(
 ) : RecyclerView.Adapter<TacheAdapter.TacheViewHolder>() {
 
     inner class TacheViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
         val textFaith: TextView = view.findViewById(R.id.text_faith)
         val progressFaith: ProgressBar = view.findViewById(R.id.progress_faith)
         val textScore: TextView = view.findViewById(R.id.text_score)
@@ -35,7 +34,8 @@ class TacheAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TacheViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.viewholder_taches_quotidien, parent, false)
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.viewholder_taches_quotidien, parent, false)
         return TacheViewHolder(view)
     }
 
@@ -97,7 +97,7 @@ class TacheAdapter(
     private fun saveTachesToStorage() {
         try {
             val json = Gson().toJson(tacheList)
-            context.openFileOutput("taches_quotidiennes.json", Context.MODE_PRIVATE).use {
+            context.openFileOutput(jsonFileName, Context.MODE_PRIVATE).use {
                 OutputStreamWriter(it).use { writer -> writer.write(json) }
             }
         } catch (e: Exception) {

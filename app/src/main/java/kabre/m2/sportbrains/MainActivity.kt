@@ -3,6 +3,7 @@ package kabre.m2.sportbrains
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import androidx.activity.addCallback
@@ -11,8 +12,10 @@ import com.bumptech.glide.Glide
 import kabre.m2.sportbrains.Manager.LocaleHelper
 import kabre.m2.sportbrains.Manager.MusicManager
 import kabre.m2.sportbrains.Model.NombreEtoile
+import kabre.m2.sportbrains.Model.QuestModel
 import kabre.m2.sportbrains.Model.Tache
 import kabre.m2.sportbrains.Model.UserModel
+import kabre.m2.sportbrains.TraitementJson.Quest
 import kabre.m2.sportbrains.TraitementJson.Stars
 import kabre.m2.sportbrains.TraitementJson.Taches
 import kabre.m2.sportbrains.TraitementJson.User
@@ -27,6 +30,9 @@ class MainActivity : AppCompatActivity() {
 
     private val tacheHandler: Taches by lazy { Taches() }
     private  var taches: List<Tache>? = null
+
+    private val questHandler: Quest by lazy { Quest() }
+    private  var quest: List<QuestModel>? = null
 
     var etoileList: List<NombreEtoile> = emptyList()
     private val traitementStar: Stars by lazy { Stars() }
@@ -66,12 +72,15 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+        // Charger les données d'étoiles
+        etoileList = traitementStar.loadEtoileData(this, 1)
         // Charger les données utilisateur depuis le stockage interne ou `assets`
         user = userHandler.loadUserData(this)
 
         user?.let {
             // Update name
             binding.nomTxt.text = getString(R.string.hello) + ", ${it.name}"
+            binding.play.text = getString(R.string.niveau) + " " + it.level
 
             // Load profile image using Glide
             val imageResourceId = it.pic?.let { pic -> getImageResourceId(pic) }
@@ -84,15 +93,14 @@ class MainActivity : AppCompatActivity() {
             // Update score
             binding.currentScore.text = it.score.toString()
         }
-
+        print("User: $user")
+        Log.e("User", "$user")
         tacheCompleted()
+        questCompleted()
 
     }
 
     fun tacheCompleted() {
-        // Charger les données d'étoiles
-        etoileList = traitementStar.loadEtoileData(this, 1)
-
         // Calculer la somme des étoiles
         val totalStars = etoileList.sumOf { it.NbEtoile }
 
@@ -101,10 +109,38 @@ class MainActivity : AppCompatActivity() {
 
         // Vérifie si au moins une tâche est complétée
         val isTacheComplete = taches!!.any { it.progress == it.max && it.statusss }
+        Log.e("TAche Completed", "tache Completed : $isTacheComplete")
 
         // Affiche ou masque l'animation selon l'état des tâches
             binding.lottieBackgroundTache.visibility = if (isTacheComplete) View.VISIBLE else View.INVISIBLE
     }
+
+
+    fun questCompleted() {
+        val totalStars = etoileList.sumOf { it.NbEtoile }
+        val userScore = user?.score ?: 0
+        val userScoreDepense = user?.scoreDepence ?: 0
+
+        quest = questHandler.loadQuestData(this, userScore, totalStars, userScoreDepense)?.toMutableList()
+            ?: mutableListOf()
+
+        // Debug log
+        quest!!.forEach {
+            Log.d("QuestCheck", "Tâche: ${it.nom}, status=${it.statusss}, current=${it.progress}, total=${it.max}")
+        }
+
+        // Vérifie si au moins une tâche est complétée
+        val isTacheComplete = quest!!.any { it.progress == it.max && it.statusss }
+        Log.e("TAche Completed", "tache Completed : $isTacheComplete")
+        if (isTacheComplete) {
+            binding.lottieBackgroundQuest.visibility = View.VISIBLE
+            binding.lottieBackgroundQuest.playAnimation()
+        } else {
+            binding.lottieBackgroundQuest.visibility = View.INVISIBLE
+            binding.lottieBackgroundQuest.cancelAnimation()
+        }
+    }
+
 
     fun View.onClickOpen(context: Context, target: Class<*>) {
         setOnClickListener {

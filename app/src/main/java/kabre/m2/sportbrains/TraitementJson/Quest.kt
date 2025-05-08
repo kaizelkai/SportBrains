@@ -5,76 +5,65 @@ import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kabre.m2.sportbrains.Model.QuestModel
-import kabre.m2.sportbrains.Model.UserModel
+import kabre.m2.sportbrains.Model.Tache
 import java.io.File
 import java.io.InputStreamReader
 import java.io.OutputStreamWriter
 
 class Quest {
 
+    private val FILE_NAME = "quests.json"
+
     fun loadQuestData(context: Context, userScore: Int, totalStars: Int, userDepence: Int): List<QuestModel>? {
-        val internalFile = File(context.filesDir, "quests.json")
+        val internalFile = File(context.filesDir, FILE_NAME)
 
-        return if (internalFile.exists()) {
-            try {
-                val inputStream = internalFile.inputStream()
-                val reader = InputStreamReader(inputStream)
-                val questType = object : TypeToken<List<QuestModel>>() {}.type
-                val quests = Gson().fromJson<List<QuestModel>>(reader, questType)
-
-
-                updateQuestData(quests, userScore, totalStars, userDepence)
-
-                quests
-            } catch (e: Exception) {
-                Log.e("Quest", "Erreur lors du chargement des données de quêtes", e)
-                null
+        return try {
+            val inputStream = if (internalFile.exists()) {
+                internalFile.inputStream()
+            } else {
+                context.assets.open(FILE_NAME).also {
+                    val reader = InputStreamReader(it)
+                    val tacheType = object : TypeToken<List<QuestModel>>() {}.type
+                    val tache = Gson().fromJson<List<QuestModel>>(reader, tacheType)
+                    saveQuestDataToInternalStorage(context, tache)
+                }
+                internalFile.inputStream()
             }
-        } else {
-            // Charger depuis `assets` si le fichier n'existe pas dans le stockage interne
-            try {
-                val inputStream = context.assets.open("quests.json")
-                val reader = InputStreamReader(inputStream)
-                val questType = object : TypeToken<List<QuestModel>>() {}.type
-                val quests = Gson().fromJson<List<QuestModel>>(reader, questType)
 
-                updateQuestData(quests, userScore, totalStars, userDepence)
+            val reader = InputStreamReader(inputStream)
+            val tacheType = object : TypeToken<List<QuestModel>>() {}.type
+            val taches = Gson().fromJson<List<QuestModel>>(reader, tacheType)
+            updateQuestData(taches, userScore, totalStars, userDepence)
+            saveQuestDataToInternalStorage(context, taches)
+            taches
+        } catch (e: Exception) {
+            Log.e("Quest", "Erreur lors du chargement des tâches", e)
+            null
+        }
+    }
 
-                // Sauvegarder les données lues dans le fichier interne
-                saveQuestDataToInternalStorage(context, quests)
-                quests
-            } catch (e: Exception) {
-                Log.e("Quest", "Erreur lors du chargement des données de quêtes depuis assets", e)
-                null
+    private fun updateQuestData(taches: List<QuestModel>, userScore: Int, totalStars: Int, userDepence: Int) {
+        taches.forEach { tache ->
+            when (tache.condition) {
+                1 -> tache.progress = totalStars
+                2 -> tache.progress = userScore
+                3 -> tache.progress = userDepence
+            }
+            if (tache.progress >= tache.max && !tache.statusss) {
+                tache.statusss = true
             }
         }
     }
 
-    // Fonction pour sauvegarder la liste des quêtes dans le fichier interne
-    fun saveQuestDataToInternalStorage(context: Context, questList: List<QuestModel>) {
+    fun saveQuestDataToInternalStorage(context: Context, tacheList: List<QuestModel>) {
         try {
-            val jsonString = Gson().toJson(questList)
-            context.openFileOutput("quests.json", Context.MODE_PRIVATE).use { outputStream ->
-                OutputStreamWriter(outputStream).use { writer ->
-                    writer.write(jsonString)
-                }
+            val json = Gson().toJson(tacheList)
+            context.openFileOutput(FILE_NAME, Context.MODE_PRIVATE).use {
+                OutputStreamWriter(it).use { writer -> writer.write(json) }
             }
         } catch (e: Exception) {
-            Log.e("Quest", "Erreur lors de la sauvegarde des données de quêtes", e)
+            Log.e("Taches", "Erreur lors de la sauvegarde", e)
         }
     }
 
-    // Fonction pour mettre à jour currentcCompleteNb et le statut des quêtes
-    private fun updateQuestData(quests: List<QuestModel>, userScore: Int, totalStars: Int, userDepence: Int) {
-        quests.forEach { quest ->
-            when (quest.condition) {
-                1 -> quest.currentcCompleteNb = totalStars
-                2 -> quest.currentcCompleteNb = userScore
-                3 -> quest.currentcCompleteNb = userDepence
-            }
-            if (quest.currentcCompleteNb >= quest.completeNb && quest.status == 2) {
-                quest.status = 3
-            }
-        }
-    }
 }

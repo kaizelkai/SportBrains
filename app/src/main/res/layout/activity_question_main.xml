@@ -51,14 +51,16 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:padding="12dp"
-                        android:src="@drawable/left_arrow" />
+                        android:src="@drawable/left_arrow"
+                        tools:visibility="invisible" />
 
                     <ImageView
                         android:id="@+id/rightArrow"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:padding="12dp"
-                        android:src="@drawable/right_arrow" />
+                        android:src="@drawable/right_arrow"
+                        tools:visibility="invisible" />
 
                     <LinearLayout
                         android:layout_width="50dp"

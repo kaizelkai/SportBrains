@@ -8,37 +8,39 @@ import android.view.WindowManager
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import kabre.m2.sportbrains.Adaptater.QuestAdaptater
+import kabre.m2.sportbrains.Adaptater.TacheAdapter
 import kabre.m2.sportbrains.Manager.LocaleHelper
 import kabre.m2.sportbrains.Manager.MusicManager
 import kabre.m2.sportbrains.Model.NombreEtoile
 import kabre.m2.sportbrains.Model.QuestModel
+import kabre.m2.sportbrains.Model.Tache
 import kabre.m2.sportbrains.Model.UserModel
 import kabre.m2.sportbrains.TraitementJson.Quest
 import kabre.m2.sportbrains.TraitementJson.Stars
+import kabre.m2.sportbrains.TraitementJson.Taches
 import kabre.m2.sportbrains.TraitementJson.User
 import kabre.m2.sportbrains.databinding.ActivityQuestMainBinding
+import kabre.m2.sportbrains.databinding.ActivityTacheQuotidienBinding
 
 class QuestMainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityQuestMainBinding
-    private var questList: MutableList<QuestModel> = mutableListOf()  // Liste modifiable des quêtes
-    private var user: UserModel? = null  // L'utilisateur actuel
+    private var completedTasks = 0
+    private var currentCoin = 0
+    private var user: UserModel? = null
+    private val userManager: User by lazy { User() }
 
     var etoileList: List<NombreEtoile> = emptyList()
-
-    private val traitementQuest: Quest by lazy { Quest() }
+    private val questManager: Quest by lazy { Quest() }
     private val traitementStar: Stars by lazy { Stars() }
-    private val userHandler: User by lazy { User() }
+    private lateinit var questList: MutableList<QuestModel>
+    private val jsonFileName = "quests.json"
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(LocaleHelper.onAttach(newBase))
     }
-
-    private val questAdapter: QuestAdaptater by lazy { QuestAdaptater { quest: QuestModel ->
-        // Logique lors du clic sur un élément
-        handleQuestClick(quest)
-    } }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,37 +51,69 @@ class QuestMainActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         )
-        onBackPressedDispatcher.addCallback(this) {
-            // Désactive la touche retour
+
+        onBackPressedDispatcher.addCallback(this) {}
+
+        user = userManager.loadUserData(this)
+        user?.let {
+            currentCoin = it.score
+            binding.currentScore.text = currentCoin.toString()
         }
         // Charger les données d'étoiles
         etoileList = traitementStar.loadEtoileData(this, 1)
 
         // Calculer la somme des étoiles
         val totalStars = etoileList.sumOf { it.NbEtoile }
-
-        // Charger les données utilisateur
-        user = userHandler.loadUserData(this)
-
         // Charger les données JSON depuis le fichier interne ou assets si c'est la première fois
-        questList = traitementQuest.loadQuestData(this, user?.score ?: 0, totalStars, user?.scoreDepence ?: 0)?.toMutableList() ?: mutableListOf()
+        questList = questManager.loadQuestData(this, user?.score ?: 0, totalStars, user?.scoreDepence ?: 0)?.toMutableList() ?: mutableListOf()
 
-        // Trier les quêtes par status
-        val sortedQuest: List<QuestModel> = questList.sortedByDescending { it.status }
+        val tacheSize = questList.size
+        binding.taskMainProgress.max = 13
+        binding.taskMainProgressText.text = "${13-tacheSize} / 13"
+        binding.taskMainProgress.progress = 13-tacheSize
+        if (tacheSize==0){
+            binding.taskMainTitle.text = getString(R.string.Bravo)
+            binding.taskMainProgressText.text = "13 / 13"
+        }
 
-        binding.apply {
-            backBtn2.setOnClickListener {
-                MusicManager.sonClick(context = this@QuestMainActivity)
-                navigateToMainActivity()
-            }
+        binding.leaderView.layoutManager = LinearLayoutManager(this)
+        binding.leaderView.adapter = QuestAdaptater(
+            jsonFileName,
+            questList,
+            onTacheCompleted = { completed ->
+                completedTasks += completed
+                binding.taskMainProgressText.text = "$completedTasks / 13"
+                binding.taskMainProgress.progress = completedTasks
 
-            questAdapter.differ.submitList(sortedQuest)
-            leaderView.apply {
-                layoutManager = LinearLayoutManager(context)
-                adapter = questAdapter
-            }
+                if (completedTasks == 13) {
+                    binding.taskMainTitle.text = getString(R.string.Bravo)
+                    binding.currentScore.text = currentCoin.toString()
+                    currentCoin+=100
+                    saveUserData()
+                }
+            },
+            recompense = { recompenseAjoute ->
+                currentCoin += recompenseAjoute
+                binding.currentScore.text = currentCoin.toString()
+                saveUserData()
+            },
+            context = this
+        )
+
+        binding.backButton.setOnClickListener {
+            MusicManager.sonClick(context = this)
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
         }
     }
+
+    private fun saveUserData() {
+        user?.apply {
+            score = currentCoin
+            userManager.updateUserData(this@QuestMainActivity, this)
+        }
+    }
+
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
         if (hasFocus) {
@@ -99,30 +133,5 @@ class QuestMainActivity : AppCompatActivity() {
         startActivity(intent)
         // Ne pas appeler super.onBackPressed() pour empêcher la fermeture immédiate
     }
-    private fun handleQuestClick(quest: QuestModel) {
-        when (quest.status) {
-            3 -> {
-                quest.status = 1  // Changer le status de 3 à 1
-                user?.let {
-                    userHandler.updateUserScore(it, quest.recompence)  // Ajouter la récompense au score de l'utilisateur
-                    userHandler.saveUserDataToInternalStorage(this, it)  // Sauvegarder les nouvelles données utilisateur
-                }
-                traitementQuest.saveQuestDataToInternalStorage(this, questList) // Sauvegarder les modifications dans le fichier interne
-                questAdapter.differ.submitList(questList.sortedByDescending { it.status })
-            }
-            2 -> {
-                navigateToLevelMainActivity()
-            }
-        }
-    }
 
-    private fun navigateToMainActivity() {
-        startActivity(Intent(this, MainActivity::class.java))
-        finish()
-    }
-
-    private fun navigateToLevelMainActivity() {
-        startActivity(Intent(this, LevelMainActivity::class.java))
-        finish()
-    }
 }

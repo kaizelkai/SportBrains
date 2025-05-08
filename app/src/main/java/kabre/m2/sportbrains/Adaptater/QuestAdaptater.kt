@@ -1,95 +1,112 @@
 package kabre.m2.sportbrains.Adaptater
 
+import android.animation.Animator
+import android.animation.ObjectAnimator
+import android.content.Context
+import android.media.MediaPlayer
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.AsyncListDiffer
-import androidx.recyclerview.widget.DiffUtil
+import android.view.animation.AnimationUtils
+import android.view.animation.DecelerateInterpolator
+import android.widget.ImageView
+import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import com.google.gson.Gson
 import kabre.m2.sportbrains.Model.QuestModel
+import kabre.m2.sportbrains.Model.Tache
 import kabre.m2.sportbrains.R
-import kabre.m2.sportbrains.databinding.ViewholderQuestBinding
+import java.io.OutputStreamWriter
 
-class QuestAdaptater(private val onClick: (QuestModel) -> Unit) : RecyclerView.Adapter<QuestAdaptater.ViewHolder>() {
+class QuestAdaptater(
+    private val jsonFileName: String,
+    private val questList: MutableList<QuestModel>,
+    private val onTacheCompleted: (Int) -> Unit,
+    private val recompense: (Int) -> Unit,
+    private val context: Context
+) : RecyclerView.Adapter<QuestAdaptater.QuestViewHolder>() {
 
-    inner class ViewHolder(val binding: ViewholderQuestBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class QuestViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val textFaith: TextView = view.findViewById(R.id.text_faith)
+        val progressFaith: ProgressBar = view.findViewById(R.id.progress_faith)
+        val textScore: TextView = view.findViewById(R.id.text_score)
+        val iconGift: ImageView = view.findViewById(R.id.icon_gift1)
+    }
 
-        // Fonction pour gérer l'affichage des statuts via un Map
-        private val statusDrawableMap = mapOf(
-            1 to R.drawable.termine,
-            2 to R.drawable.aller,
-            3 to R.drawable.recuperer
-        )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QuestViewHolder {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.viewholder_taches_quotidien, parent, false)
+        return QuestViewHolder(view)
+    }
 
-        fun bind(quest: QuestModel) {
-            // Description de la quête
-            binding.description.text = quest.description
+    override fun onBindViewHolder(holder: QuestViewHolder, position: Int) {
+        val quest = questList[position]
 
-            // Chargement des images de la quête avec Glide
-            Glide.with(binding.root.context)
-                .load(getDrawableResourceId(quest.questPic, R.drawable.star_on)) // Image par défaut
-                .into(binding.questPic)
+        val questName = quest.nom?.let {
+            val resId = context.resources.getIdentifier(it, "string", context.packageName)
+            if (resId != 0) context.getString(resId) else it
+        } ?: "Nom non défini"
 
-            // Chargement de l'image de récompense
-            Glide.with(binding.root.context)
-                .load(getDrawableResourceId(quest.recompencePic, R.drawable.star_on)) // Image par défaut
-                .into(binding.recompencePic)
+        holder.textFaith.text = questName
+        holder.progressFaith.max = quest.max
+        holder.textScore.text = "${quest.progress} / ${quest.max}"
 
-            // Nombre d'objectifs complétés
-            binding.completeNb.text = quest.completeNb.toString()
+        val progressAnim = ObjectAnimator.ofInt(holder.progressFaith, "progress", 0, quest.progress)
+        progressAnim.duration = 1500
+        progressAnim.interpolator = DecelerateInterpolator()
 
-            // Récompense
-            binding.recompence.text = quest.recompence.toString()
-            binding.currentcCompleteNb.text = quest.currentcCompleteNb.toString()
+        progressAnim.addListener(object : Animator.AnimatorListener {
+            override fun onAnimationStart(animation: Animator) {}
 
+            override fun onAnimationEnd(animation: Animator) {
+                val pos = holder.adapterPosition
+                if (pos != RecyclerView.NO_POSITION) {
+                    val currentTache = questList[pos]
+                    if (currentTache.progress >= currentTache.max) {
+                        holder.itemView.startAnimation(AnimationUtils.loadAnimation(context, R.anim.zoom_in))
+                        holder.iconGift.setImageResource(R.drawable.check)
+                        holder.itemView.setBackgroundResource(R.drawable.navy_background_green)
 
-            // Gestion du statut avec un fallback par défaut
-            quest.status.takeIf { statusDrawableMap.containsKey(it) }?.let { status ->
-                binding.status.background = binding.root.context.getDrawable(statusDrawableMap[status] ?: R.drawable.aller)
-                if (status==1){
-                    binding.status.setOnClickListener(null)
+                        val mediaPlayer = MediaPlayer.create(context, R.raw.coins)
+                        mediaPlayer.setOnCompletionListener { mp -> mp.release() }
+                        mediaPlayer.start()
+
+                        holder.itemView.postDelayed({
+                            val finalPos = holder.adapterPosition
+                            if (finalPos != RecyclerView.NO_POSITION) {
+                                val removed = questList.removeAt(finalPos)
+                                notifyItemRemoved(finalPos)
+                                notifyItemRangeChanged(finalPos, questList.size)
+                                onTacheCompleted(1)
+                                recompense(removed.recompence)
+                                saveTachesToStorage()
+                            }
+                        }, 600)
+                    } else {
+                        holder.iconGift.setImageResource(R.drawable.coins)
+                        holder.itemView.setBackgroundResource(R.drawable.navy_background)
+                    }
                 }
             }
 
-            // Clic sur l'élément de la quête
-            itemView.setOnClickListener { onClick(quest) }
-        }
+            override fun onAnimationCancel(animation: Animator) {}
+            override fun onAnimationRepeat(animation: Animator) {}
+        })
 
-        // Méthode sécurisée pour obtenir l'ID d'une ressource drawable avec une valeur par défaut
-        private fun getDrawableResourceId(resourceName: String?, defaultResId: Int): Int {
-            return resourceName?.let {
-                val resId = binding.root.resources.getIdentifier(it, "drawable", binding.root.context.packageName)
-                if (resId != 0) resId else defaultResId
-            } ?: defaultResId
-        }
+        progressAnim.start()
     }
 
-    // Callback pour gérer la différence entre les éléments de la liste
-    private val differCallback = object : DiffUtil.ItemCallback<QuestModel>() {
-        override fun areItemsTheSame(oldItem: QuestModel, newItem: QuestModel): Boolean {
-            return oldItem.id == newItem.id
+    override fun getItemCount(): Int = questList.size
+
+    private fun saveTachesToStorage() {
+        try {
+            val json = Gson().toJson(questList)
+            context.openFileOutput(jsonFileName, Context.MODE_PRIVATE).use {
+                OutputStreamWriter(it).use { writer -> writer.write(json) }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
-
-        override fun areContentsTheSame(oldItem: QuestModel, newItem: QuestModel): Boolean {
-            return oldItem == newItem
-        }
     }
-
-    // Gestion asynchrone des données avec AsyncListDiffer
-    val differ = AsyncListDiffer(this, differCallback)
-
-    // Création de la vue du ViewHolder
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ViewholderQuestBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding)
-    }
-
-    // Liaison des données avec le ViewHolder
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val quest = differ.currentList[position]
-        holder.bind(quest)
-    }
-
-    // Nombre d'éléments dans la liste
-    override fun getItemCount(): Int = differ.currentList.size
 }

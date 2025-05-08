@@ -65,7 +65,11 @@ class QuestMainActivity : AppCompatActivity() {
         // Calculer la somme des étoiles
         val totalStars = etoileList.sumOf { it.NbEtoile }
         // Charger les données JSON depuis le fichier interne ou assets si c'est la première fois
-        questList = questManager.loadQuestData(this, user?.score ?: 0, totalStars, user?.scoreDepence ?: 0)?.toMutableList() ?: mutableListOf()
+        //questList = questManager.loadQuestData(this, user?.score ?: 0, totalStars, user?.scoreDepence ?: 0)?.toMutableList() ?: mutableListOf()
+        questList = questManager
+            .loadQuestData(this, user?.score ?: 0, totalStars, user?.scoreDepence ?: 0)
+            ?.sortedWith(compareByDescending<QuestModel> { it.progress >= it.max }.thenBy { it.nom }) // facultatif: trie secondaire par nom
+            ?.toMutableList() ?: mutableListOf()
 
         val tacheSize = questList.size
         binding.taskMainProgress.max = 13
@@ -110,6 +114,7 @@ class QuestMainActivity : AppCompatActivity() {
     private fun saveUserData() {
         user?.apply {
             score = currentCoin
+            questTerminer= completedTasks
             userManager.updateUserData(this@QuestMainActivity, this)
         }
     }

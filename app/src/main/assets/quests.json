@@ -1,46 +1,46 @@
 [
   {
     "id": 0,
-    "nom": "niveau_1",
+    "nom": "toile_1_quest",
     "iconeTache": "R.drawable.coins",
     "iconeCadeau": "R.drawable.coins",
-    "progress": 1,
+    "progress": 0,
     "max": 1,
     "recompence": 2,
-    "condition": 4,
+    "condition": 1,
     "status": false
   },
   {
     "id": 1,
-    "nom": "niveau_5",
+    "nom": "toile_5_quest",
     "iconeTache": "R.drawable.coins",
     "iconeCadeau": "R.drawable.garnet",
     "progress": 0,
     "max": 5,
-    "recompence": 5,
-    "condition": 4,
+    "recompence": 10,
+    "condition": 1,
     "status": false
   },
   {
     "id": 2,
-    "nom": "niveau_10",
+    "nom": "quest_3",
     "iconeTache": "R.drawable.coins",
     "iconeCadeau": "R.drawable.garnet",
     "progress": 0,
-    "max": 10,
+    "max": 3,
     "recompence": 10,
     "condition": 4,
     "status": false
   },
   {
     "id": 3,
-    "nom": "niveau_15",
+    "nom": "pieces_50",
     "iconeTache": "R.drawable.coins",
     "iconeCadeau": "R.drawable.garnet",
     "progress": 0,
-    "max": 15,
+    "max": 5,
     "recompence": 15,
-    "condition": 4,
+    "condition": 2,
     "status": false
   },
   {

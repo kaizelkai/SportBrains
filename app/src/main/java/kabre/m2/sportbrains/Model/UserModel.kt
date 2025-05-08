@@ -10,12 +10,16 @@ data class UserModel(
     var score: Int,
     var scoreDepence: Int,
     var level: Int,
-    var levelPart: Int
+    var levelPart: Int,
+    var progressTache: Int,
+    var questTerminer: Int
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
         parcel.readString(),
         parcel.readString(),
+        parcel.readInt(),
+        parcel.readInt(),
         parcel.readInt(),
         parcel.readInt(),
         parcel.readInt(),
@@ -30,6 +34,8 @@ data class UserModel(
         parcel.writeInt(scoreDepence)
         parcel.writeInt(level)
         parcel.writeInt(levelPart)
+        parcel.writeInt(progressTache)
+        parcel.writeInt(questTerminer)
     }
 
     override fun describeContents(): Int {

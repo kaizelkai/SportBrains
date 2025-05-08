@@ -1,11 +1,13 @@
 [
   {
     "id": 1,
-    "name": "Henry",
+    "name": "Sport Brainer",
     "pic": "profile",
-    "score": 100,
+    "score": 50,
     "scoreDepence": 0,
     "level": 1,
-    "levelPart": 0
+    "levelPart": 0,
+    "progressTache": 0,
+    "questTerminer": 0
   }
 ]

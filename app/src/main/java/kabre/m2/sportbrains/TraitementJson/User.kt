@@ -84,6 +84,8 @@ class User {
                     scoreDepence = newUser.scoreDepence
                     level = newUser.level
                     levelPart = newUser.levelPart
+                    progressTache = newUser.progressTache
+                    questTerminer = newUser.questTerminer
                 }
 
                 // Sauvegarder les nouvelles données utilisateur dans la liste

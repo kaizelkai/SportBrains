@@ -63,7 +63,11 @@ class TacheQuotidienActivity : AppCompatActivity() {
         // Calculer la somme des étoiles
         val totalStars = etoileList.sumOf { it.NbEtoile }
         // Charger les données JSON depuis le fichier interne ou assets si c'est la première fois
-        tacheList = tacheManager.loadQuestData(this, user?.score ?: 0, totalStars, user?.scoreDepence ?: 0)?.toMutableList() ?: mutableListOf()
+        //tacheList = tacheManager.loadQuestData(this, user?.score ?: 0, totalStars, user?.scoreDepence ?: 0)?.toMutableList() ?: mutableListOf()
+        tacheList = tacheManager
+            .loadQuestData(this, user?.score ?: 0, totalStars, user?.scoreDepence ?: 0)
+            ?.sortedWith(compareByDescending<Tache> { it.progress >= it.max }.thenBy { it.nom }) // facultatif: trie secondaire par nom
+            ?.toMutableList() ?: mutableListOf()
 
         val tacheSize = tacheList.size
         binding.taskMainProgress.max = 13
@@ -108,6 +112,7 @@ class TacheQuotidienActivity : AppCompatActivity() {
     private fun saveUserData() {
         user?.apply {
             score = currentCoin
+            progressTache = completedTasks
             userManager.updateUserData(this@TacheQuotidienActivity, this)
         }
     }

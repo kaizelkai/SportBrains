@@ -68,7 +68,7 @@ class QuestMainActivity : AppCompatActivity() {
         //questList = questManager.loadQuestData(this, user?.score ?: 0, totalStars, user?.scoreDepence ?: 0)?.toMutableList() ?: mutableListOf()
         questList = questManager
             .loadQuestData(this, user?.score ?: 0, totalStars, user?.scoreDepence ?: 0)
-            ?.sortedWith(compareByDescending<QuestModel> { it.progress >= it.max }.thenBy { it.nom }) // facultatif: trie secondaire par nom
+            ?.sortedWith(compareByDescending<QuestModel> { it.progress >= it.max }.thenBy { it.progress }) // facultatif: trie secondaire par nom
             ?.toMutableList() ?: mutableListOf()
 
         val tacheSize = questList.size

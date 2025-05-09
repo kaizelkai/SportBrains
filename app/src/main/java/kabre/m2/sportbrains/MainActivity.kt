@@ -104,17 +104,28 @@ class MainActivity : AppCompatActivity() {
         // Calculer la somme des étoiles
         val totalStars = etoileList.sumOf { it.NbEtoile }
 
-        // Charger les tâches
-        taches = tacheHandler.loadQuestData(this, user?.score ?: 0, totalStars, user?.scoreDepence ?: 0)?.toMutableList() ?: mutableListOf()
+        // Recharge la liste mise à jour
+        val tacheManager = Taches()
+        val tache = tacheManager.loadQuestData(this, user?.score ?: 0, totalStars, user?.scoreDepence ?: 0)
 
         // Vérifie si au moins une tâche est complétée
-        val isTacheComplete = taches!!.any { it.progress == it.max && it.statusss }
-        Log.e("TAche Completed", "tache Completed : $isTacheComplete")
+        val isTacheComplete = tache?.any { it.progress >= it.max && it.statusss } ?: false
+
+        Log.e("Tâche Completed", "Tâche Completed : $isTacheComplete")
 
         // Affiche ou masque l'animation selon l'état des tâches
-            binding.lottieBackgroundTache.visibility = if (isTacheComplete) View.VISIBLE else View.INVISIBLE
-    }
+        //binding.lottieBackgroundTache.visibility = if (isTacheComplete) View.VISIBLE else View.INVISIBLE
 
+        if (isTacheComplete) {
+            binding.lottieBackgroundTache.visibility = View.VISIBLE
+            binding.lottieBackgroundTache.playAnimation()
+        } else {
+            binding.lottieBackgroundTache.visibility = View.INVISIBLE
+            binding.lottieBackgroundTache.cancelAnimation()
+        }
+
+
+    }
 
     fun questCompleted() {
         val totalStars = etoileList.sumOf { it.NbEtoile }
@@ -129,9 +140,15 @@ class MainActivity : AppCompatActivity() {
             Log.d("QuestCheck", "Tâche: ${it.nom}, status=${it.statusss}, current=${it.progress}, total=${it.max}")
         }
 
+        // Recharge la liste mise à jour
+        val questManager = Quest()
+        val quest = questManager.loadQuestData(this, user?.score ?: 0, totalStars, user?.scoreDepence ?: 0)
+
         // Vérifie si au moins une tâche est complétée
-        val isTacheComplete = quest!!.any { it.progress == it.max && it.statusss }
-        Log.e("TAche Completed", "tache Completed : $isTacheComplete")
+        val isTacheComplete = quest?.any { it.progress >= it.max && it.statusss } ?: false
+
+        Log.e("Tâche Completed", "Tâche Completed : $isTacheComplete")
+
         if (isTacheComplete) {
             binding.lottieBackgroundQuest.visibility = View.VISIBLE
             binding.lottieBackgroundQuest.playAnimation()
@@ -139,8 +156,8 @@ class MainActivity : AppCompatActivity() {
             binding.lottieBackgroundQuest.visibility = View.INVISIBLE
             binding.lottieBackgroundQuest.cancelAnimation()
         }
-    }
 
+    }
 
     fun View.onClickOpen(context: Context, target: Class<*>) {
         setOnClickListener {

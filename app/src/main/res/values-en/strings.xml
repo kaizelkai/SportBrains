@@ -40,6 +40,11 @@
     <string name="depense_100">Spend 100 pieces</string>
     <string name="depense_200">Spend 200 pieces</string>
     <string name="depense_500">Spend 500 pieces</string>
+
+    <string name="piece_Obtenu_10">Get 10 pieces</string>
+    <string name="piece_Obtenu_20">Get 20 pieces</string>
+    <string name="piece_Obtenu_50">Get 50 pieces</string>
+    <string name="piece_Obtenu_100">Get 100 pieces</string>
     
     
     <string name="questTitre">Quests</string>

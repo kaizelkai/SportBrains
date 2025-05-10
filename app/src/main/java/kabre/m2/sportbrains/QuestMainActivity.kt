@@ -72,12 +72,12 @@ class QuestMainActivity : AppCompatActivity() {
             ?.toMutableList() ?: mutableListOf()
 
         val tacheSize = questList.size
-        binding.taskMainProgress.max = 13
-        binding.taskMainProgressText.text = "${13-tacheSize} / 13"
-        binding.taskMainProgress.progress = 13-tacheSize
+        binding.taskMainProgress.max = user?.questTerminer ?: 0
+        binding.taskMainProgressText.text = (user?.questTerminer ?: 0.toString()).toString()
+        binding.taskMainProgress.progress = user?.questTerminer ?: 0
         if (tacheSize==0){
             binding.taskMainTitle.text = getString(R.string.Bravo)
-            binding.taskMainProgressText.text = "13 / 13"
+            binding.taskMainProgressText.text = (user?.questTerminer ?: 0.toString()).toString()
         }
 
         binding.leaderView.layoutManager = LinearLayoutManager(this)
@@ -86,10 +86,10 @@ class QuestMainActivity : AppCompatActivity() {
             questList,
             onTacheCompleted = { completed ->
                 completedTasks += completed
-                binding.taskMainProgressText.text = "$completedTasks / 13"
-                binding.taskMainProgress.progress = completedTasks
+                binding.taskMainProgressText.text = (user?.questTerminer ?: 0.toString()).toString()
+                binding.taskMainProgress.progress = user?.questTerminer ?: 0
 
-                if (completedTasks == 13) {
+                if (completedTasks == 99999) {
                     binding.taskMainTitle.text = getString(R.string.Bravo)
                     binding.currentScore.text = currentCoin.toString()
                     currentCoin+=100
@@ -114,7 +114,7 @@ class QuestMainActivity : AppCompatActivity() {
     private fun saveUserData() {
         user?.apply {
             score = currentCoin
-            questTerminer= completedTasks
+            questTerminer += completedTasks
             userManager.updateUserData(this@QuestMainActivity, this)
         }
     }
@@ -138,5 +138,4 @@ class QuestMainActivity : AppCompatActivity() {
         startActivity(intent)
         // Ne pas appeler super.onBackPressed() pour empêcher la fermeture immédiate
     }
-
 }

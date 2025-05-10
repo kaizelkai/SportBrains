@@ -40,6 +40,11 @@
     <string name="depense_200">Dépenser 200 pièces</string>
     <string name="depense_500">Dépenser 500 pièces</string>
 
+    <string name="piece_Obtenu_10">Obtenir 10 piéces</string>
+    <string name="piece_Obtenu_20">Obtenir 20 piéces</string>
+    <string name="piece_Obtenu_50">Obtenir 50 piéces</string>
+    <string name="piece_Obtenu_100">Obtenir 100 piéces</string>
+
     <!-- Quets -->
     <string name="questTitre">Quetes</string>
     <string name="nombreQuetTerminer">Le nombre de quetes terminé</string>

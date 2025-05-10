@@ -16,6 +16,7 @@ import kabre.m2.sportbrains.Levels.SportLevel1
 import kabre.m2.sportbrains.Manager.LocaleHelper
 import kabre.m2.sportbrains.Manager.MusicManager
 import kabre.m2.sportbrains.Model.QuestionModel
+import kabre.m2.sportbrains.TraitementJson.TachesCompleterJson
 
 class VictoryMainActivity : AppCompatActivity() {
     lateinit var binding: ActivityVictoryMainBinding
@@ -24,6 +25,8 @@ class VictoryMainActivity : AppCompatActivity() {
 
     private val traitementUser: User by lazy { User() }
     private val traitementStars: Stars by lazy { Stars() }
+
+    private val tachesCompleterJsonManager: TachesCompleterJson by lazy { TachesCompleterJson() }
 
     private var nbEtoile = 0
     private var positionLevel = 0
@@ -120,10 +123,12 @@ class VictoryMainActivity : AppCompatActivity() {
         nextLev = if (nbEtoile > 0) 1 else 0
     }
 
+
     private fun saveProgressAndNavigate(targetActivity: Class<*>) {
         // Sauvegarder la progression de l'utilisateur et des étoiles
         saveEtoilesData()
         saveUserData()
+        saveCompleteTache()
 
         // Naviguer vers l'activité spécifiée
         startActivity(Intent(this, targetActivity))
@@ -133,6 +138,7 @@ class VictoryMainActivity : AppCompatActivity() {
     private fun drirectionNavigation(targetActivity: Class<*>,positionLevel:Int) {
         saveEtoilesData()
         saveUserData()
+        saveCompleteTache()
 
         // Récupérer la liste des questions pour le niveau actuel
         val questionList = getQuestionListForLevel(positionLevel)
@@ -183,6 +189,24 @@ class VictoryMainActivity : AppCompatActivity() {
 
             // Sauvegarder les données utilisateur
             traitementUser.updateUserData(this@VictoryMainActivity, this)
+        }
+    }
+
+    private fun saveCompleteTache() {
+        val completeTache = tachesCompleterJsonManager.loadUserData(this)
+
+        completeTache?.apply {
+            pieceObtenu += totalScore
+            etoileObtenu += nbEtoile
+
+            if (positionLevel < niveauTerminer)
+            {
+                niveauTerminer = niveauTerminer
+            }else {
+                niveauTerminer += nextLev
+            }
+            // Sauvegarder les données utilisateur
+            tachesCompleterJsonManager.updateUserData(this@VictoryMainActivity, this)
         }
     }
 

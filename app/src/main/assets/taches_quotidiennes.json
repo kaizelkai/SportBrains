@@ -4,10 +4,10 @@
     "nom": "niveau_1",
     "iconeTache": "R.drawable.coins",
     "iconeCadeau": "R.drawable.coins",
-    "progress": 1,
+    "progress": 0,
     "max": 1,
     "recompence": 2,
-    "condition": 4,
+    "condition": 1,
     "status": false
   },
   {
@@ -18,7 +18,7 @@
     "progress": 0,
     "max": 5,
     "recompence": 5,
-    "condition": 4,
+    "condition": 1,
     "status": false
   },
   {
@@ -29,7 +29,7 @@
     "progress": 0,
     "max": 10,
     "recompence": 10,
-    "condition": 4,
+    "condition": 1,
     "status": false
   },
   {
@@ -40,7 +40,7 @@
     "progress": 0,
     "max": 15,
     "recompence": 15,
-    "condition": 4,
+    "condition": 1,
     "status": false
   },
   {
@@ -51,7 +51,7 @@
     "progress": 0,
     "max": 20,
     "recompence": 20,
-    "condition": 4,
+    "condition": 1,
     "status": false
   },
 
@@ -60,10 +60,10 @@
     "nom": "etoil_3",
     "iconeTache": "R.drawable.coins",
     "iconeCadeau": "R.drawable.garnet",
-    "progress": 3,
+    "progress": 0,
     "max": 3,
     "recompence": 5,
-    "condition": 5,
+    "condition": 2,
     "status": false
   },
 
@@ -75,7 +75,7 @@
     "progress": 0,
     "max": 5,
     "recompence": 5,
-    "condition": 5,
+    "condition": 2,
     "status": false
   },
 
@@ -87,7 +87,7 @@
     "progress": 0,
     "max": 10,
     "recompence": 10,
-    "condition": 5,
+    "condition": 2,
     "status": false
   },
 
@@ -99,7 +99,7 @@
     "progress": 0,
     "max": 15,
     "recompence": 10,
-    "condition": 5,
+    "condition": 2,
     "status": false
   },
 
@@ -111,7 +111,7 @@
     "progress": 0,
     "max": 20,
     "recompence": 15,
-    "condition": 5,
+    "condition": 2,
     "status": false
   },
 
@@ -120,7 +120,7 @@
     "nom": "depense_100",
     "iconeTache": "R.drawable.coins",
     "iconeCadeau": "R.drawable.garnet",
-    "progress": 100,
+    "progress": 0,
     "max": 100,
     "recompence": 100,
     "condition": 4,
@@ -135,7 +135,7 @@
     "progress": 0,
     "max": 200,
     "recompence": 100,
-    "condition": 3,
+    "condition": 4,
     "status": false
   },
   {
@@ -146,7 +146,53 @@
     "progress": 0,
     "max": 500,
     "recompence": 100,
+    "condition": 4,
+    "status": false
+  },
+  {
+    "id": 13,
+    "nom": "piece_Obtenu_10",
+    "iconeTache": "R.drawable.coins",
+    "iconeCadeau": "R.drawable.garnet",
+    "progress": 0,
+    "max": 10,
+    "recompence": 5,
+    "condition": 3,
+    "status": false
+  },
+
+  {
+    "id": 14,
+    "nom": "piece_Obtenu_20",
+    "iconeTache": "R.drawable.coins",
+    "iconeCadeau": "R.drawable.garnet",
+    "progress": 0,
+    "max": 20,
+    "recompence": 10,
+    "condition": 3,
+    "status": false
+  },
+  {
+    "id": 15,
+    "nom": "piece_Obtenu_50",
+    "iconeTache": "R.drawable.coins",
+    "iconeCadeau": "R.drawable.garnet",
+    "progress": 0,
+    "max": 50,
+    "recompence": 15,
+    "condition": 3,
+    "status": false
+  },
+  {
+    "id": 16,
+    "nom": "piece_Obtenu_100",
+    "iconeTache": "R.drawable.coins",
+    "iconeCadeau": "R.drawable.garnet",
+    "progress": 0,
+    "max": 100,
+    "recompence": 100,
     "condition": 3,
     "status": false
   }
+
 ]

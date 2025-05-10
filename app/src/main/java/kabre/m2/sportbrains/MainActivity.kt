@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import kabre.m2.sportbrains.Manager.LocaleHelper
 import kabre.m2.sportbrains.Manager.MusicManager
+import kabre.m2.sportbrains.Model.CompleteTache
 import kabre.m2.sportbrains.Model.NombreEtoile
 import kabre.m2.sportbrains.Model.QuestModel
 import kabre.m2.sportbrains.Model.Tache
@@ -18,6 +19,7 @@ import kabre.m2.sportbrains.Model.UserModel
 import kabre.m2.sportbrains.TraitementJson.Quest
 import kabre.m2.sportbrains.TraitementJson.Stars
 import kabre.m2.sportbrains.TraitementJson.Taches
+import kabre.m2.sportbrains.TraitementJson.TachesCompleterJson
 import kabre.m2.sportbrains.TraitementJson.User
 import kabre.m2.sportbrains.databinding.ActivityMainBinding
 
@@ -36,6 +38,10 @@ class MainActivity : AppCompatActivity() {
 
     var etoileList: List<NombreEtoile> = emptyList()
     private val traitementStar: Stars by lazy { Stars() }
+
+    private var completeTache: CompleteTache? = null
+    private val tachesCompleterJsonManager: TachesCompleterJson by lazy { TachesCompleterJson() }
+
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(LocaleHelper.onAttach(newBase))
@@ -103,10 +109,11 @@ class MainActivity : AppCompatActivity() {
     fun tacheCompleted() {
         // Calculer la somme des étoiles
         val totalStars = etoileList.sumOf { it.NbEtoile }
+        completeTache = tachesCompleterJsonManager.loadUserData(this)
 
         // Recharge la liste mise à jour
         val tacheManager = Taches()
-        val tache = tacheManager.loadQuestData(this, user?.score ?: 0, totalStars, user?.scoreDepence ?: 0)
+        val tache = tacheManager.loadQuestData(this, completeTache?.niveauTerminer ?: 0, completeTache?.etoileObtenu ?: 0, completeTache?.pieceObtenu ?: 0,completeTache?.pieceDepencer ?: 0)
 
         // Vérifie si au moins une tâche est complétée
         val isTacheComplete = tache?.any { it.progress >= it.max && it.statusss } ?: false

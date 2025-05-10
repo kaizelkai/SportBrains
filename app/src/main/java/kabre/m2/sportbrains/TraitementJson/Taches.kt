@@ -13,7 +13,7 @@ class Taches {
 
     private val FILE_NAME = "taches_quotidiennes.json"
 
-    fun loadQuestData(context: Context, userScore: Int, totalStars: Int, userDepence: Int): List<Tache>? {
+    fun loadQuestData(context: Context, niveauTerminer: Int, etoileObtenu: Int, pieceObtenu: Int, pieceDepencer: Int): List<Tache>? {
         val internalFile = File(context.filesDir, FILE_NAME)
 
         return try {
@@ -32,7 +32,7 @@ class Taches {
             val reader = InputStreamReader(inputStream)
             val tacheType = object : TypeToken<List<Tache>>() {}.type
             val taches = Gson().fromJson<List<Tache>>(reader, tacheType)
-            updateQuestData(taches, userScore, totalStars, userDepence)
+            updateQuestData(taches, niveauTerminer, etoileObtenu, pieceObtenu, pieceDepencer)
             saveQuestDataToInternalStorage(context, taches)
             taches
         } catch (e: Exception) {
@@ -41,12 +41,13 @@ class Taches {
         }
     }
 
-    private fun updateQuestData(taches: List<Tache>, userScore: Int, totalStars: Int, userDepence: Int) {
+    private fun updateQuestData(taches: List<Tache>, niveauTerminer: Int, etoileObtenu: Int, pieceObtenu: Int, pieceDepencer: Int) {
         taches.forEach { tache ->
             when (tache.condition) {
-                1 -> tache.progress = totalStars
-                2 -> tache.progress = userScore
-                3 -> tache.progress = userDepence
+                1 -> tache.progress = niveauTerminer
+                2 -> tache.progress = etoileObtenu
+                3 -> tache.progress = pieceObtenu
+                4 -> tache.progress = pieceDepencer
             }
             if (tache.progress >= tache.max && !tache.statusss) {
                 tache.statusss = true

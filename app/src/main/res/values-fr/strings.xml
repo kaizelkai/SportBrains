@@ -24,6 +24,12 @@
     <string name="Effectuer8tâchesparjour">Effectuer 8 tâches par jour</string>
     <string name="Bravo">Tâches quotidiennes terminer</string>
 
+    <string name="reclamation_soulignee"><u>Réclamation</u></string>
+    <string name="jour">Jour</string>
+    <string name="Obtenir_x3_avec_la_vidéo">Obtenir x3 avec la vidéo +360</string>
+    <string name="recompence_quotidienne">Récompence quotidienne</string>
+
+
     <!-- Tâches quotidiennes -->
     <string name="niveau_1">Terminer 1 niveau</string>
     <string name="niveau_5">Terminer 5 niveaux</string>

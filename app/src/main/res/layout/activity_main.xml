@@ -167,6 +167,7 @@
                             android:textSize="20sp" />
 
                         <ImageView
+                            android:id="@+id/classement"
                             android:layout_width="55dp"
                             android:layout_height="55dp"
                             android:layout_gravity="center_vertical"

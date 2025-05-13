@@ -48,6 +48,7 @@ class TacheAdapter(
         holder.progressFaith.max = tache.max
         holder.textScore.text = "${tache.progress}/${tache.max}"
 
+
         val progressAnim = ObjectAnimator.ofInt(holder.progressFaith, "progress", 0, tache.progress)
         progressAnim.duration = 1500
         progressAnim.interpolator = DecelerateInterpolator()

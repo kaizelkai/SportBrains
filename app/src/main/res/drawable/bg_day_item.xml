@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#552299" /> <!-- Couleur de fond (violet foncé transparent) -->
+            <corners android:radius="12dp" /> <!-- Coins arrondis -->
+            <stroke
+                android:width="2dp"
+                android:color="#AAFFFFFF" /> <!-- Bordure blanche semi-transparente -->
+        </shape>
+    </item>
+</selector>

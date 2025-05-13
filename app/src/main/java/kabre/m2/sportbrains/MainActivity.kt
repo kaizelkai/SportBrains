@@ -76,6 +76,8 @@ class MainActivity : AppCompatActivity() {
 
             parametre.onClickOpen(this@MainActivity, ParametreActivity::class.java)
 
+            classement.onClickOpen(this@MainActivity, RecompenceQuotidienneActivity::class.java)
+
         }
 
         // Charger les données d'étoiles

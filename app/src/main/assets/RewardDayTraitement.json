@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "image": "reward_coin.png",
+    "soccer": 100,
+    "status": false
+  },
+  {
+    "id": 2,
+    "image": "reward_star.png",
+    "soccer": 120,
+    "status": false
+  },
+  {
+    "id": 3,
+    "image": "reward_gem.png",
+    "soccer": 140,
+    "status": false
+  },
+  {
+    "id": 4,
+    "image": "reward_coin.png",
+    "soccer": 160,
+    "status": false
+  },
+  {
+    "id": 5,
+    "image": "reward_star.png",
+    "soccer": 180,
+    "status": false
+  },
+  {
+    "id": 6,
+    "image": "reward_gem.png",
+    "soccer": 200,
+    "status": false
+  },
+  {
+    "id": 7,
+    "image": "reward_big.png",
+    "soccer": 300,
+    "status": false
+  }
+]

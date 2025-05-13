@@ -15,6 +15,7 @@
         tools:targetApi="31">
         <activity
             android:name=".RecompenceQuotidienneActivity"
+            android:theme="@style/DialogTheme"
             android:exported="false" />
         <activity
             android:name=".TacheQuotidienActivity"

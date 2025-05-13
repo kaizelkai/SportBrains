@@ -41,6 +41,7 @@ class ExitActivity : AppCompatActivity() {
 
         binding.btnQuit.setOnClickListener {
             MusicManager.sonClick(context = this@ExitActivity)
+            MusicManager.stopMusic()
             finishAffinity() // Fermer complètement l'application
         }
 

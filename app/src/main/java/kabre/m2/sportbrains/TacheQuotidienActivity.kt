@@ -116,7 +116,6 @@ class TacheQuotidienActivity : AppCompatActivity() {
 
         binding.backButton.setOnClickListener {
             MusicManager.sonClick(context = this)
-            startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
     }

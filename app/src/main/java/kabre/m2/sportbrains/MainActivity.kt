@@ -3,6 +3,8 @@ package kabre.m2.sportbrains
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
@@ -42,7 +44,9 @@ class MainActivity : AppCompatActivity() {
     private var completeTache: CompleteTache? = null
     private val tachesCompleterJsonManager: TachesCompleterJson by lazy { TachesCompleterJson() }
 
-
+    private val preferences by lazy {
+        getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+    }
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(LocaleHelper.onAttach(newBase))
     }
@@ -105,6 +109,18 @@ class MainActivity : AppCompatActivity() {
         Log.e("User", "$user")
         tacheCompleted()
         questCompleted()
+
+
+        val isFirstLaunch = preferences.getBoolean("first_launch", true)
+
+        if (isFirstLaunch) {
+            preferences.edit().putBoolean("first_launch", false).apply()
+
+            Handler(Looper.getMainLooper()).postDelayed({
+                val intent = Intent(this, RecompenceQuotidienneActivity::class.java)
+                startActivity(intent)
+            }, 2000)
+        }
 
     }
 
@@ -201,4 +217,10 @@ class MainActivity : AppCompatActivity() {
         return resources.getIdentifier(imageName, "drawable", packageName)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        if (isFinishing) {
+            preferences.edit().putBoolean("first_launch", true).apply()
+        }
+    }
 }

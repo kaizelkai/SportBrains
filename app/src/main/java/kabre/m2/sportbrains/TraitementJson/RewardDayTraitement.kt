@@ -50,4 +50,11 @@ class RewardDayTraitement {
             Log.e("rewardDayList", "Erreur lors de la sauvegarde", e)
         }
     }
+
+    fun updateRewardStatus(context: Context, rewardId: Int, newStatus: Boolean): List<RewardDay>? {
+        val rewardDayList = loadRewardDaytData(context)?.toMutableList()
+        rewardDayList?.find { it.id == rewardId }?.status = newStatus
+        rewardDayList?.let { saveRewardDayDataToInternalStorage(context, it) }
+        return rewardDayList
+    }
 }

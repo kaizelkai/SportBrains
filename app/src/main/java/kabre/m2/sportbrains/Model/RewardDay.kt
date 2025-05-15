@@ -7,7 +7,7 @@ data class RewardDay(
     val id: Int,
     val image: String,
     val soccer: Int,
-    val status: Boolean
+    var status: Boolean
 ):Parcelable{
     constructor(parcel: Parcel) : this(
         parcel.readInt(),

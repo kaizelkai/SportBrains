@@ -28,6 +28,7 @@
     <string name="jour">Day</string>
     <string name="Obtenir_x3_avec_la_vidéo">Get x3 with video +360</string>
     <string name="recompence_quotidienne">Daily reward</string>
+    <string name="recompense_reclamee">Claimed reward</string>
 
 
     <!-- Tâches quotidiennes -->

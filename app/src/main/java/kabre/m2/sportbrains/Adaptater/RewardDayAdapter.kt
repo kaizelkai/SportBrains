@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide
 import kabre.m2.sportbrains.Model.RewardDay
 import kabre.m2.sportbrains.R
 
-class RewardDayAdapter(private val context: Context, private val rewardDayList: List<RewardDay>) :
+class RewardDayAdapter(private val context: Context, private var rewardDayList: List<RewardDay>) :
     RecyclerView.Adapter<RewardDayAdapter.RewardViewHolder>() {
 
     // On prend seulement les 6 premiers éléments de la liste
@@ -46,5 +46,9 @@ class RewardDayAdapter(private val context: Context, private val rewardDayList: 
         val dayText: TextView = itemView.findViewById(R.id.dayText)
         val soccerText: TextView = itemView.findViewById(R.id.dayScore)
         val rewardImage: ImageView = itemView.findViewById(R.id.dayImage)
+    }
+    fun updateData(newList: List<RewardDay>) {
+        rewardDayList = newList
+        notifyDataSetChanged()
     }
 }

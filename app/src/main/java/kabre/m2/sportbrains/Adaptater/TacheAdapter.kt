@@ -14,6 +14,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
+import kabre.m2.sportbrains.Manager.MusicManager
 import kabre.m2.sportbrains.Model.Tache
 import kabre.m2.sportbrains.R
 import java.io.OutputStreamWriter
@@ -64,9 +65,7 @@ class TacheAdapter(
                         holder.iconGift.setImageResource(R.drawable.check)
                         holder.itemView.setBackgroundResource(R.drawable.navy_background_green)
 
-                        val mediaPlayer = MediaPlayer.create(context, R.raw.coins)
-                        mediaPlayer.setOnCompletionListener { it.release() }
-                        mediaPlayer.start()
+                        MusicManager.coinSon(context)
 
                         holder.itemView.postDelayed({
                             val finalPos = holder.adapterPosition

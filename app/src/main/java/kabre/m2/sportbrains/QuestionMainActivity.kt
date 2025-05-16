@@ -66,7 +66,8 @@ class QuestionMainActivity : AppCompatActivity(), QuestionAdapter.Score {
             progressBar.progress = 1
 
             updateQuestion()
-
+            rightArrow?.isEnabled = false
+            leftArrow?.isEnabled = false
             rightArrow.setOnClickListener {
                 !questionAdapter.isNext()
                 if (progressBar.progress == 10) {

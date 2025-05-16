@@ -1,5 +1,6 @@
 package kabre.m2.sportbrains.Manager
 
+import android.animation.Animator
 import android.content.Context
 import android.media.MediaPlayer
 import android.widget.ImageView
@@ -9,6 +10,7 @@ object MusicManager {
 
     private var mediaPlayer: MediaPlayer? = null
     private lateinit var mediaPlayerSon: MediaPlayer
+    private lateinit var coinRSon: MediaPlayer
     var isSonMuted: Boolean = false
         private set
     var isMuted: Boolean = false
@@ -20,6 +22,13 @@ object MusicManager {
         if (!isSonMuted) { // Check if sound effects are muted
             mediaPlayerSon = MediaPlayer.create(context, R.raw.click)
             mediaPlayerSon.start()
+        }
+    }
+
+    fun coinSon(context: Context) {
+        if (!isSonMuted) { // Check if sound effects are muted
+            coinRSon = MediaPlayer.create(context, R.raw.coins)
+            coinRSon.start()
         }
     }
 
@@ -70,4 +79,5 @@ object MusicManager {
     fun updateSonIcon(imageView: ImageView) {
         imageView.setImageResource(if (isSonMuted) R.drawable.ic_volume_off else R.drawable.ic_volume_up)
     }
+
 }

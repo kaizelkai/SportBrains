@@ -3,6 +3,7 @@ package kabre.m2.sportbrains
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.View
@@ -22,7 +23,9 @@ import kabre.m2.sportbrains.Adaptater.RewardDayAdapter
 import kabre.m2.sportbrains.Manager.LocaleHelper
 import kabre.m2.sportbrains.Manager.MusicManager
 import kabre.m2.sportbrains.Model.RewardDay
+import kabre.m2.sportbrains.Model.UserModel
 import kabre.m2.sportbrains.TraitementJson.RewardDayTraitement
+import kabre.m2.sportbrains.TraitementJson.User
 import kabre.m2.sportbrains.databinding.ActivityRecompenceQuotidienneBinding
 import java.util.Calendar
 
@@ -39,6 +42,10 @@ class RecompenceQuotidienneActivity : AppCompatActivity() {
 
     private val PREFS_NAME = "RewardPrefs"
     private val LAST_CLAIMED_DATE_KEY = "lastClaimedDate"
+
+    private var user: UserModel? = null
+
+    private val userHandler: User by lazy { User() }
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(LocaleHelper.onAttach(newBase))
@@ -57,6 +64,8 @@ class RecompenceQuotidienneActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         )
 
+        user = userHandler.loadUserData(this)
+
         // Bouton retour désactivé
         onBackPressedDispatcher.addCallback(this) {}
 
@@ -73,7 +82,15 @@ class RecompenceQuotidienneActivity : AppCompatActivity() {
         loadRewardData()
 
         claimRewardTextView?.setOnClickListener {
-            claimDailyReward()
+            MusicManager.sonClick(this)
+            claimDailyReward(true)
+            MusicManager.coinSon(this)
+
+        }
+        btnVideoReward?.setOnClickListener {
+            MusicManager.sonClick(this)
+            claimDailyReward(false)
+            MusicManager.coinSon(this)
         }
 
         updateClaimButtonState()
@@ -109,7 +126,7 @@ class RecompenceQuotidienneActivity : AppCompatActivity() {
     }
 
     @OptIn(UnstableApi::class)
-    private fun claimDailyReward() {
+    private fun claimDailyReward(typeClick:Boolean) {
         val lastClaimedDate = sharedPreferences.getLong(LAST_CLAIMED_DATE_KEY, 0)
         val currentDate = Calendar.getInstance().timeInMillis
         val calendar = Calendar.getInstance()
@@ -134,6 +151,14 @@ class RecompenceQuotidienneActivity : AppCompatActivity() {
                         if (reward.id == lastReward?.id) {
                             findViewById<LinearLayout>(R.id.day7)?.alpha = 0.5f
                             lastReward = reward.copy(status = true)
+                        }
+                        user?.apply {
+                            if(typeClick){
+                                this.score += reward.soccer
+                            }else{
+                                this.score = score + (reward.soccer*3)+ 150
+                            }
+                            userHandler.updateUserData(this@RecompenceQuotidienneActivity, this)
                         }
 
                         // Save the current date as the last claimed date

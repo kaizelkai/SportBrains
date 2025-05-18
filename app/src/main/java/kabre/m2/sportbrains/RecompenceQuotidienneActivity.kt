@@ -1,16 +1,20 @@
 package kabre.m2.sportbrains
-
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.media.MediaPlayer
+import android.nfc.Tag
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.View
+import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.annotation.OptIn
 import androidx.appcompat.app.AppCompatActivity
@@ -19,9 +23,18 @@ import androidx.media3.common.util.UnstableApi
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.gms.ads.AdError
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.FullScreenContentCallback
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.RequestConfiguration
+import com.google.android.gms.ads.rewarded.RewardedAd
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import kabre.m2.sportbrains.Adaptater.RewardDayAdapter
 import kabre.m2.sportbrains.Manager.LocaleHelper
 import kabre.m2.sportbrains.Manager.MusicManager
+import kabre.m2.sportbrains.Manager.RewardedRecompenceAds
 import kabre.m2.sportbrains.Model.RewardDay
 import kabre.m2.sportbrains.Model.UserModel
 import kabre.m2.sportbrains.TraitementJson.RewardDayTraitement
@@ -30,6 +43,7 @@ import kabre.m2.sportbrains.databinding.ActivityRecompenceQuotidienneBinding
 import java.util.Calendar
 
 class RecompenceQuotidienneActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityRecompenceQuotidienneBinding
     private lateinit var sharedPreferences: SharedPreferences
     private var rewardDayList: List<RewardDay>? = null
@@ -39,18 +53,17 @@ class RecompenceQuotidienneActivity : AppCompatActivity() {
     private var nextRewardTimer: CountDownTimer? = null
     private var nextRewardTimeTextView: TextView? = null
     private var btnVideoReward: TextView? = null
-
     private val PREFS_NAME = "RewardPrefs"
     private val LAST_CLAIMED_DATE_KEY = "lastClaimedDate"
-
     private var user: UserModel? = null
-
     private val userHandler: User by lazy { User() }
+
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(LocaleHelper.onAttach(newBase))
     }
 
+    @OptIn(UnstableApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRecompenceQuotidienneBinding.inflate(layoutInflater)
@@ -78,55 +91,68 @@ class RecompenceQuotidienneActivity : AppCompatActivity() {
         claimRewardTextView = findViewById(R.id.claimReward)
         nextRewardTimeTextView = findViewById(R.id.nextRewardTime)
         btnVideoReward = findViewById(R.id.btn_video_reward)
-        // Charger les données depuis le JSON
+
+
         loadRewardData()
 
         claimRewardTextView?.setOnClickListener {
             MusicManager.sonClick(this)
             claimDailyReward(true)
             MusicManager.coinSon(this)
-
         }
         btnVideoReward?.setOnClickListener {
-            MusicManager.sonClick(this)
-            claimDailyReward(false)
-            MusicManager.coinSon(this)
+            MusicManager.pauseMusic()
+            val rewardedAds = RewardedRecompenceAds(this)
+            rewardedAds.loadAndShowRewardAds(
+                updateClaimButtonState = {
+                    updateClaimButtonState()
+                },
+                claimDailyReward = { isDouble ->
+                    claimDailyReward(isDouble)
+                }
+            )
+            MusicManager.startMusic(this)
         }
 
         updateClaimButtonState()
+
+
     }
+
 
     private fun loadRewardData() {
         rewardDayList = RewardDayTraitement().loadRewardDaytData(this)
 
-        if (!rewardDayList.isNullOrEmpty()) {
+        rewardDayList?.let { list ->
             val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
             recyclerView.layoutManager = GridLayoutManager(this, 3)
-            rewardDayAdapter = RewardDayAdapter(this@RecompenceQuotidienneActivity, rewardDayList!!)
+            rewardDayAdapter = RewardDayAdapter(this@RecompenceQuotidienneActivity, list.take(6))
             recyclerView.adapter = rewardDayAdapter
 
-            lastReward = rewardDayList!!.last()
+            lastReward = list.lastOrNull()
 
-            val day7Text = findViewById<TextView>(R.id.day7Text)
-            val day7Score = findViewById<TextView>(R.id.day7Score)
-            val day7Image = findViewById<ImageView>(R.id.day7Image)
-            val day7Layout = findViewById<LinearLayout>(R.id.day7)
+            lastReward?.let { last ->
+                val day7Text = findViewById<TextView>(R.id.day7Text)
+                val day7Score = findViewById<TextView>(R.id.day7Score)
+                val day7Image = findViewById<ImageView>(R.id.day7Image)
+                val day7Layout = findViewById<LinearLayout>(R.id.day7)
 
-            day7Text.text = getString(R.string.jour) + " ${lastReward!!.id}"
-            day7Score.text = "${lastReward!!.soccer}"
+                day7Text.text = getString(R.string.jour) + " ${last.id}"
+                day7Score.text = "${last.soccer}"
 
-            val imageResId = resources.getIdentifier(
-                lastReward!!.image.removeSuffix(".png"), "drawable", packageName
-            )
-            if (imageResId != 0) {
-                Glide.with(this).load(imageResId).into(day7Image)
+                val imageResId = resources.getIdentifier(
+                    last.image.removeSuffix(".png"), "drawable", packageName
+                )
+                if (imageResId != 0) {
+                    Glide.with(this).load(imageResId).into(day7Image)
+                }
+                day7Layout.alpha = if (last.status) 0.5f else 1.0f
             }
-            day7Layout.alpha = if (lastReward!!.status) 0.5f else 1.0f
         }
     }
 
     @OptIn(UnstableApi::class)
-    private fun claimDailyReward(typeClick:Boolean) {
+    private fun claimDailyReward(typeClick: Boolean) {
         val lastClaimedDate = sharedPreferences.getLong(LAST_CLAIMED_DATE_KEY, 0)
         val currentDate = Calendar.getInstance().timeInMillis
         val calendar = Calendar.getInstance()
@@ -153,10 +179,10 @@ class RecompenceQuotidienneActivity : AppCompatActivity() {
                             lastReward = reward.copy(status = true)
                         }
                         user?.apply {
-                            if(typeClick){
+                            if (typeClick) {
                                 this.score += reward.soccer
-                            }else{
-                                this.score = score + (reward.soccer*3)+ 150
+                            } else {
+                                this.score += (reward.soccer * 3) + 150
                             }
                             userHandler.updateUserData(this@RecompenceQuotidienneActivity, this)
                         }
@@ -267,4 +293,5 @@ class RecompenceQuotidienneActivity : AppCompatActivity() {
         super.onDestroy()
         stopNextRewardTimer()
     }
+
 }

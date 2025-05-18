@@ -79,5 +79,18 @@
     <string name="lorem_ipsum">
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
-    status_icon
+
+    <string name="app_id_test">ca-app-pub-3940256099942544~3347511713</string>
+    <string name="banner_id_test">ca-app-pub-3940256099942544/9214589741"</string>
+    <string name="rewarded_ad_id_test">ca-app-pub-3940256099942544/5224354917"</string>
+
+    <string name="app_id_live">ca-app-pub-8461215960615240~2919013628</string>
+    <string name="banner_id_live">ca-app-pub-8461215960615240/4602504652"</string>
+    <string name="rewarded_ad_id_live">ca-app-pub-8461215960615240/6799075547"</string>
+
+    <string name="rewarded_titre">Veuillez patienter</string>
+    <string name="rewarded_message">Chargement de l\'annonce récompence...</string>
+
+
+
 </resources>

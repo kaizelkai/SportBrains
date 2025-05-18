@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "161424413912",
+    "project_id": "admob-ads-kotlin-4d46c",
+    "storage_bucket": "admob-ads-kotlin-4d46c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:161424413912:android:de270a487ba07f32c573ad",
+        "android_client_info": {
+          "package_name": "kabre.m2.sportbrains"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXVtGVqI9n0G8p5rgj6AIVjnqJjjt1w2E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -82,6 +82,8 @@ class MainActivity : AppCompatActivity() {
 
             classement.onClickOpen(this@MainActivity, RecompenceQuotidienneActivity::class.java)
 
+            cadeau.onClickOpen(this@MainActivity, Cadeau::class.java)
+
         }
 
         // Charger les données d'étoiles

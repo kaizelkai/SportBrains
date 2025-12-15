@@ -6,15 +6,18 @@ import android.os.Parcelable
 data class NombreBlocStats(
     val id: Int,
     var nombre: Int,
+    var type: String
 ): Parcelable{
     constructor(parcel:Parcel): this(
         parcel.readInt(),
-        parcel.readInt()
+        parcel.readInt(),
+        parcel.readString().toString()
     )
 
     override fun writeToParcel(p0: Parcel, p1: Int) {
         p0.writeInt(id)
         p0.writeInt(nombre)
+        p0.writeString(type)
     }
 
     override fun describeContents(): Int {

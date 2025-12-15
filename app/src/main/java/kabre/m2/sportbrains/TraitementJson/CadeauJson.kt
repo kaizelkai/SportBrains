@@ -3,16 +3,16 @@ package kabre.m2.sportbrains.TraitementJson
 import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import kabre.m2.sportbrains.Model.NombreBlocStats
+import kabre.m2.sportbrains.Model.Cadeau
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStreamReader
 
-class NumberBlocStats {
+class CadeauJson {
 
     // Charger les données JSON des étoiles
-    fun loadNumberBlocStatsData(context: Context): List<NombreBlocStats> {
-        val fileName = "nombreBlocStats.json"
+    fun loadCadeauData(context: Context): List<Cadeau> {
+        val fileName = "cadeau.json"
         val internalFile = File(context.filesDir, fileName)
 
         // Si le fichier n'existe pas dans le stockage interne, le copier depuis les assets
@@ -24,7 +24,7 @@ class NumberBlocStats {
         val inputStream = internalFile.inputStream()
         val reader = InputStreamReader(inputStream)
         val gson = Gson()
-        val type = object : TypeToken<List<NombreBlocStats>>() {}.type
+        val type = object : TypeToken<List<Cadeau>>() {}.type
         return gson.fromJson(reader, type)
     }
 
@@ -42,11 +42,11 @@ class NumberBlocStats {
     }
 
     // Fonction pour sauvegarder les données JSON dans le stockage interne
-    fun saveNumberBlocStatsData(context: Context, nombreBlocStats: List<NombreBlocStats>) {
+    fun saveCadeauData(context: Context, cadeau: List<Cadeau>) {
         val fileName = "nombreBlocStats.json"
         val internalFile = File(context.filesDir, fileName)
         val gson = Gson()
-        val jsonString = gson.toJson(nombreBlocStats)
+        val jsonString = gson.toJson(cadeau)
         internalFile.writeText(jsonString)
     }
 }

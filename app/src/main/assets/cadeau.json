@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "levelRequard": 1,
+    "basicImage": "gift_basic_1.png",
+    "basicPoint": 50,
+    "extraImage": "gift_extra_1.png",
+    "extraPoint": 100
+  },
+  {
+    "id": 2,
+    "levelRequard": 2,
+    "basicImage": "gift_basic_2.png",
+    "basicPoint": 60,
+    "extraImage": "gift_extra_2.png",
+    "extraPoint": 120
+  },
+  {
+    "id": 3,
+    "levelRequard": 3,
+    "basicImage": "gift_basic_3.png",
+    "basicPoint": 70,
+    "extraImage": "gift_extra_3.png",
+    "extraPoint": 140
+  },
+  {
+    "id": 4,
+    "levelRequard": 4,
+    "basicImage": "gift_basic_4.png",
+    "basicPoint": 80,
+    "extraImage": "gift_extra_4.png",
+    "extraPoint": 160
+  },
+  {
+    "id": 5,
+    "levelRequard": 5,
+    "basicImage": "gift_basic_5.png",
+    "basicPoint": 90,
+    "extraImage": "gift_extra_5.png",
+    "extraPoint": 180
+  },
+  {
+    "id": 6,
+    "levelRequard": 6,
+    "basicImage": "gift_basic_6.png",
+    "basicPoint": 100,
+    "extraImage": "gift_extra_6.png",
+    "extraPoint": 200
+  },
+  {
+    "id": 7,
+    "levelRequard": 7,
+    "basicImage": "gift_basic_7.png",
+    "basicPoint": 120,
+    "extraImage": "gift_extra_7.png",
+    "extraPoint": 240
+  },
+  {
+    "id": 8,
+    "levelRequard": 8,
+    "basicImage": "gift_basic_8.png",
+    "basicPoint": 140,
+    "extraImage": "gift_extra_8.png",
+    "extraPoint": 280
+  },
+  {
+    "id": 9,
+    "levelRequard": 9,
+    "basicImage": "gift_basic_9.png",
+    "basicPoint": 160,
+    "extraImage": "gift_extra_9.png",
+    "extraPoint": 320
+  },
+  {
+    "id": 10,
+    "levelRequard": 10,
+    "basicImage": "gift_basic_10.png",
+    "basicPoint": 200,
+    "extraImage": "gift_extra_10.png",
+    "extraPoint": 400
+  }
+]

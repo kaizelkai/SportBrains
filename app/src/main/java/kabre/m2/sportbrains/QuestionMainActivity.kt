@@ -10,6 +10,7 @@ import android.view.Window
 import android.view.WindowManager
 import android.widget.TextView
 import androidx.activity.addCallback
+import androidx.core.view.isInvisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -17,9 +18,11 @@ import com.bumptech.glide.request.RequestOptions
 import kabre.m2.sportbrains.Adaptater.QuestionAdapter
 import kabre.m2.sportbrains.Manager.BannerAds
 import kabre.m2.sportbrains.Manager.LocaleHelper
+import kabre.m2.sportbrains.Model.NombreBlocStats
 import kabre.m2.sportbrains.Model.QuestionModel
 import kabre.m2.sportbrains.Model.ShopItem
 import kabre.m2.sportbrains.Model.UserModel
+import kabre.m2.sportbrains.TraitementJson.NumberBlocStats
 import kabre.m2.sportbrains.TraitementJson.User
 import kabre.m2.sportbrains.databinding.ActivityQuestionMainBinding
 
@@ -36,6 +39,9 @@ class QuestionMainActivity : AppCompatActivity(), QuestionAdapter.Score {
     var clickPosition: Int = 0
 
     private var user: UserModel? = null
+
+    private var numberBlocStats: List<NombreBlocStats> = emptyList()
+    private val blocStats: NumberBlocStats by lazy { NumberBlocStats() }
 
     private val userHandler: User by lazy { User() }
 
@@ -148,6 +154,45 @@ class QuestionMainActivity : AppCompatActivity(), QuestionAdapter.Score {
             binding.level.text = getString(R.string.niveau) + " " + it.level
         }
 
+        numberBlocStats = blocStats.loadNumberBlocStatsData(this)
+
+        // Récupérer chaque type de boost dans la liste
+        val demiBoost = numberBlocStats.firstOrNull { it.type == "demi" }
+        val correctBoost = numberBlocStats.firstOrNull { it.type == "correct" }
+        val statBoost = numberBlocStats.firstOrNull { it.type == "stat" }
+
+        demiBoost?.let {
+            if (it.nombre == 0) {
+                binding.demipanelNbPrix.visibility = View.VISIBLE
+                binding.demipanelNb.visibility = View.GONE
+            } else {
+                binding.demipanelNbPrix.visibility = View.GONE
+                binding.demipanelNb.text = it.nombre.toString()
+                binding.demipanelNb.visibility = View.VISIBLE
+            }
+        }
+
+        correctBoost?.let {
+            if (it.nombre == 0) {
+                binding.reponceCorrectNbPrix.visibility = View.VISIBLE
+                binding.reponceCorrectNb.visibility = View.GONE
+            } else {
+                binding.reponceCorrectNbPrix.visibility = View.GONE
+                binding.reponceCorrectNb.text = it.nombre.toString()
+                binding.reponceCorrectNb.visibility = View.VISIBLE
+            }
+        }
+
+        statBoost?.let {
+            if (it.nombre == 0) {
+                binding.statBtNbPrix.visibility = View.VISIBLE
+                binding.statBtNb.visibility = View.GONE
+            } else {
+                binding.statBtNbPrix.visibility = View.GONE
+                binding.statBtNb.text = it.nombre.toString()
+                binding.statBtNb.visibility = View.VISIBLE
+            }
+        }
         val bannerAds = BannerAds()
         bannerAds.loadBannerAd(this, binding.bannerAd)
 

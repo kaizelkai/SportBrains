@@ -15,9 +15,12 @@
         android:theme="@style/Theme.SportBrains"
         tools:targetApi="31">
         <activity
+            android:name=".Cadeau"
+            android:exported="false" />
+        <activity
             android:name=".PauseMenu"
             android:exported="false"
-            android:theme="@style/DialogTheme"/>
+            android:theme="@style/DialogTheme" />
         <activity
             android:name=".RecompenceQuotidienneActivity"
             android:exported="false"

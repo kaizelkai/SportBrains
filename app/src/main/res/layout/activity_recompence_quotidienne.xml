@@ -46,6 +46,8 @@
             app:tint="@android:color/white" />
 
         <!-- Grille des jours -->
+
+        <!-- Jour 7 -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
@@ -53,7 +55,6 @@
             android:layout_margin="2dp"
             tools:listitem="@layout/item_reward_day" />
 
-        <!-- Jour 7 -->
         <LinearLayout
             android:id="@+id/day7"
             android:layout_width="match_parent"

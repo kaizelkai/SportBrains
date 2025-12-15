@@ -27,7 +27,6 @@ class ParametreActivity : AppCompatActivity() {
     private lateinit var binding: ActivityParametreBinding
     private lateinit var musicIcon: ImageView
     private lateinit var sonIcon: ImageView
-
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(LocaleHelper.onAttach(newBase))
     }
@@ -79,46 +78,6 @@ class ParametreActivity : AppCompatActivity() {
         val bannerAds = BannerAds()
         bannerAds.loadBannerAd(this, binding.bannerAd)
 
-        /*MobileAds.initialize(this) {
-            Log.d(TAG, "onInitializationComplete")
-        }
-
-        MobileAds.setRequestConfiguration(
-            RequestConfiguration.Builder()
-                .setTestDeviceIds(listOf("PACE TEST DEVICE ID 1 HERE","PACE TEST DEVICE ID 2 HERE"))
-                .build()
-        )
-
-        val adRequest = AdRequest.Builder().build()
-        binding.bannerAd.loadAd(adRequest)
-
-        binding.bannerAd.adListener = object : AdListener() {
-            override fun onAdClosed() {
-                super.onAdClosed()
-                Log.d(TAG,"onAdClosed: ")
-            }
-
-            override fun onAdFailedToLoad(p0: LoadAdError) {
-                super.onAdFailedToLoad(p0)
-                Log.d(TAG,"onAdFailedToLoad: $p0")
-            }
-
-            override fun onAdOpened() {
-                super.onAdOpened()
-                Log.d(TAG,"onAdOpened: ")
-            }
-
-            override fun onAdClicked() {
-                super.onAdClicked()
-                Log.d(TAG,"onAdClicked: ")
-            }
-
-            override fun onAdImpression() {
-                super.onAdImpression()
-                Log.d(TAG,"onAdImpression: ")
-            }
-        }
-        */
     }
 
     override fun onResume() {

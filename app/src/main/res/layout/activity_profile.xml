@@ -1,137 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    android:background="@drawable/main_bg"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_gradient_modern"
     tools:context=".ProfileActivity">
 
     <!-- Bouton de retour -->
-    <ImageButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/backButton"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        style="@style/Widget.Material3.Button.IconButton"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
         android:layout_margin="16dp"
-        android:background="@drawable/navy_menu_background"
-        android:src="@drawable/ic_back"
+        android:layout_gravity="start|top"
+        android:background="@drawable/bg_circle_button"
         android:contentDescription="Retour"
-        android:padding="4dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        app:tint="@color/black" />
+        android:insetLeft="0dp"
+        android:insetTop="0dp"
+        android:insetRight="0dp"
+        android:insetBottom="0dp"
+        app:icon="@drawable/ic_back"
+        app:iconGravity="textStart"
+        app:iconPadding="0dp"
+        app:iconTint="@color/text_primary" />
 
-    <!-- Conteneur Profil -->
-    <LinearLayout
-        android:id="@+id/profileContainer"
+    <!-- Card principale du profil -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/profileCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_margin="24dp"
-        android:padding="16dp"
-        android:background="@drawable/bg_container"
-        android:layout_centerInParent="true">
+        android:layout_gravity="center"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="12dp"
+        app:cardBackgroundColor="@color/card_background">
 
-        <!-- Titre -->
-        <TextView
-            android:id="@+id/titleProfile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/Profil"
-            android:textSize="24sp"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold"
-            android:layout_gravity="center"/>
-
-        <!-- Image + nom -->
         <LinearLayout
+            android:id="@+id/profileContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="16dp"
-            android:gravity="center_vertical">
+            android:orientation="vertical"
+            android:padding="24dp">
 
-            <ImageView
-                android:id="@+id/profileImage"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:background="@drawable/navy_menu_background4"
-                android:padding="2dp"
-                android:src="@drawable/profile" />
-
-            <EditText
-                android:id="@+id/editUsername"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:minHeight="48dp"
-                android:layout_weight="1"
-                android:layout_marginStart="12dp"
-                android:hint="@string/NomUtilisation"
-                android:background="@drawable/bg_edittext"
-                android:padding="8dp"
-                android:textColor="#FFFFFF"
-                android:textColorHint="#CCCCCC" />
-
-
-            <ImageView
-                android:id="@+id/save_profile"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="8dp"
-                android:src="@drawable/save"
-                app:tint="@color/white" />
-        </LinearLayout>
-
-        <!-- Onglets Avatar/Honneur
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="24dp">
-
+            <!-- Titre -->
             <TextView
-                android:id="@+id/tabAvatar"
-                android:layout_width="0dp"
+                android:id="@+id/titleProfile"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Avatar"
-                android:gravity="center"
-                android:padding="8dp"
-                android:background="@drawable/bg_tab_selected"
-                android:textColor="#FFFFFF"
-                android:textStyle="bold"/>
+                android:text="@string/Profil"
+                android:textAppearance="@style/TextAppearance.SportBrains.Headline"
+                android:textColor="@color/text_primary"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:layout_marginBottom="24dp" />
 
+            <!-- Section nom et image -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="24dp">
+
+                <FrameLayout
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    android:background="@drawable/bg_circle_stroke"
+                    android:padding="4dp">
+
+                    <ImageView
+                        android:id="@+id/profileImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/profile"
+                        android:contentDescription="@string/desc_profile_image"
+                        android:scaleType="centerCrop" />
+                </FrameLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="16dp"
+                    android:hint="@string/NomUtilisation"
+                    app:boxBackgroundMode="filled"
+                    app:boxBackgroundColor="@color/surface_variant"
+                    app:boxCornerRadiusTopStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusBottomEnd="12dp"
+                    app:hintTextColor="@color/text_hint"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="2dp"
+                    app:boxStrokeColor="@color/primary">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editUsername"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="56dp"
+                        android:textAppearance="@style/TextAppearance.SportBrains.Body"
+                        android:textColor="@color/text_primary"
+                        android:textColorHint="@color/text_hint"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/save_profile"
+                    style="@style/Widget.Material3.Button.IconButton"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_marginStart="12dp"
+                    android:background="@drawable/bg_icon_button_modern"
+                    android:contentDescription="Sauvegarder"
+                    android:insetLeft="0dp"
+                    android:insetTop="0dp"
+                    android:insetRight="0dp"
+                    android:insetBottom="0dp"
+                    app:icon="@drawable/save"
+                    app:iconGravity="textStart"
+                    app:iconPadding="0dp"
+                    app:iconTint="@color/success" />
+            </LinearLayout>
+
+            <!-- Séparateur -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/surface_variant"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="24dp" />
+
+            <!-- Grille d'avatars -->
             <TextView
-                android:id="@+id/tabHonneur"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Honneur"
+                android:text="Choisir un avatar"
+                android:textAppearance="@style/TextAppearance.SportBrains.Label"
+                android:textColor="@color/text_secondary"
+                android:textSize="14sp"
+                android:layout_marginBottom="16dp" />
+
+            <GridView
+                android:id="@+id/avatarGrid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:numColumns="3"
+                android:verticalSpacing="16dp"
+                android:horizontalSpacing="16dp"
+                android:stretchMode="columnWidth"
                 android:gravity="center"
-                android:padding="8dp"
-                android:background="@drawable/bg_tab_unselected"
-                android:textColor="#CCCCCC"/>
+                android:padding="8dp" />
         </LinearLayout>
--->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/blurred_text_color"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"/>
-        <!-- Grille d'avatars -->
-        <GridView
-            android:id="@+id/avatarGrid"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:numColumns="3"
-            android:verticalSpacing="12dp"
-            android:horizontalSpacing="12dp"
-            android:stretchMode="columnWidth"
-            android:gravity="center"/>
+    </com.google.android.material.card.MaterialCardView>
 
-    </LinearLayout>
-
-</RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -16,6 +16,8 @@
     <string name="Langue">Langue</string>
     <string name="Commentaires">Commentaires</string>
     <string name="Supprimerlespub">Supprimer les publicités pop-up</string>
+    <string name="Accueil">Accueil</string>
+    <string name="pause">PAUSE</string>
 
     <string name="Profil">Profil</string>
     <string name="NomUtilisation">Nom d\'utilisateur</string>
@@ -61,15 +63,6 @@
     <string name="toile_5_quest">Avoir un total de 5 étoiles</string>
     <string name="quest_3">Compléter 3 quêtes quotidiennes</string>
     <string name="pieces_50">Gagner 50 jétons</string>
-
-    
-
-    <style name="ExitDialogTheme" parent="Theme.MaterialComponents.DayNight.Dialog">
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowNoTitle">true</item>
-    </style>
-
 
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>

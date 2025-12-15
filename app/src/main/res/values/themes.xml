@@ -1,16 +1,100 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Base Theme: hérite de AppCompat -->
-    <style name="Base.Theme.SportBrains" parent="Theme.AppCompat.DayNight.NoActionBar">
-        <!-- Couleur personnalisée -->
-        <item name="colorPrimary">@color/navy_blue</item>
-        <item name="colorPrimaryDark">@color/navy_blue</item>
-        <item name="colorAccent">@color/navy_blue</item>
+    <!-- Base Theme: Material Design 3 -->
+    <style name="Base.Theme.SportBrains" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Couleurs primaires -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/secondary</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorTertiary">@color/accent</item>
+        <item name="colorOnTertiary">@color/white</item>
+        
+        <!-- Couleurs de surface -->
+        <item name="android:colorBackground">@color/background</item>
+        <item name="colorSurface">@color/surface</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+        <item name="colorSurfaceVariant">@color/surface_variant</item>
+        <item name="colorOnSurfaceVariant">@color/text_secondary</item>
+        
+        <!-- Couleurs d'erreur -->
+        <item name="colorError">@color/error</item>
+        <item name="colorOnError">@color/white</item>
+        
+        <!-- Window -->
+        <item name="android:windowBackground">@color/background</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+        
+        <!-- Typographie -->
+        <item name="android:textAppearance">@style/TextAppearance.SportBrains.Body</item>
     </style>
 
-    <!-- Thème utilisé dans le manifeste -->
-    <style name="Theme.SportBrain" parent="Base.Theme.SportBrains">
+    <!-- Thème principal -->
+    <style name="Theme.SportBrains" parent="Base.Theme.SportBrains">
         <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+    </style>
+    
+    <!-- Thème pour les dialogues -->
+    <style name="DialogTheme" parent="Theme.Material3.DayNight.Dialog">
+        <item name="android:windowBackground">@drawable/dialog_background_modern</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="colorSurface">@color/surface</item>
+    </style>
+    
+    <style name="ExitDialogTheme" parent="DialogTheme" />
+    
+    <!-- Typographie -->
+    <style name="TextAppearance.SportBrains.Headline" parent="TextAppearance.Material3.HeadlineMedium">
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+    
+    <style name="TextAppearance.SportBrains.Title" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+    
+    <style name="TextAppearance.SportBrains.Body" parent="TextAppearance.Material3.BodyLarge">
+        <item name="android:textColor">@color/text_primary</item>
+    </style>
+    
+    <style name="TextAppearance.SportBrains.Label" parent="TextAppearance.Material3.LabelLarge">
+        <item name="android:textColor">@color/text_secondary</item>
+    </style>
+    
+    <!-- Style pour ImageView circulaire -->
+    <style name="CircularImageView">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+    
+    <!-- Style pour les boutons modernes -->
+    <style name="Widget.SportBrains.Button.Primary" parent="Widget.Material3.Button">
+        <item name="backgroundTint">@color/primary</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="cornerRadius">16dp</item>
+        <item name="android:elevation">4dp</item>
+        <item name="android:stateListAnimator">@null</item>
+    </style>
+    
+    <style name="Widget.SportBrains.Button.Secondary" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="strokeColor">@color/primary</item>
+        <item name="android:textColor">@color/primary</item>
+        <item name="cornerRadius">16dp</item>
+    </style>
+    
+    <!-- Style pour les cards -->
+    <style name="Widget.SportBrains.Card" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardBackgroundColor">@color/card_background</item>
+        <item name="cardCornerRadius">20dp</item>
+        <item name="cardElevation">8dp</item>
+        <item name="strokeWidth">0dp</item>
     </style>
 
 </resources>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/main_bg"
+    android:background="@drawable/bg_gradient_modern"
     tools:context=".VictoryMainActivity">
 
     <!-- LottieAnimationView derrière -->
@@ -22,15 +22,18 @@
         app:lottie_speed="1" />
 
     <!-- LinearLayout superposé avec le TextView -->
+
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center"
         android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -68,6 +71,7 @@
             android:gravity="center"
             android:text="VICTOIRE"
             android:textAlignment="center"
+            android:textColor="@color/black"
             android:textSize="28sp"
             android:textStyle="bold" />
 
@@ -141,6 +145,48 @@
                 app:shapeAppearanceOverlay="@style/CircleImageView"
                 app:strokeWidth="2dp" />
         </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="150dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/lumiere"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+        <!-- Bouton vidéo -->
+        <Button
+            android:id="@+id/btn_video_reward"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@android:color/holo_green_light"
+            android:text="@string/Obtenir_x3_avec_la_vidéo" />
+
+        <!-- Lien réclamation -->
+        <TextView
+            android:id="@+id/claimReward"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingTop="12dp"
+            android:text="@string/reclamation_soulignee"
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/nextRewardTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:visibility="gone"
+            tools:text="00:00:00" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

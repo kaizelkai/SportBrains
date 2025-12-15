@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import kabre.m2.sportbrains.Adaptater.QuestionAdapter
+import kabre.m2.sportbrains.Manager.BannerAds
 import kabre.m2.sportbrains.Manager.LocaleHelper
 import kabre.m2.sportbrains.Model.QuestionModel
 import kabre.m2.sportbrains.Model.ShopItem
@@ -68,6 +69,8 @@ class QuestionMainActivity : AppCompatActivity(), QuestionAdapter.Score {
             updateQuestion()
             rightArrow?.isEnabled = false
             leftArrow?.isEnabled = false
+            rightArrow.visibility = View.INVISIBLE
+            leftArrow.visibility = View.INVISIBLE
             rightArrow.setOnClickListener {
                 !questionAdapter.isNext()
                 if (progressBar.progress == 10) {
@@ -118,6 +121,7 @@ class QuestionMainActivity : AppCompatActivity(), QuestionAdapter.Score {
                 }
             }
 
+
             demipanel.setOnClickListener {
                 val validechoix = 50
                 val validechoix2 = currentScore.text.toString().toIntOrNull()
@@ -128,6 +132,11 @@ class QuestionMainActivity : AppCompatActivity(), QuestionAdapter.Score {
                     }
                 }
             }
+
+            backButton.setOnClickListener {
+                val intent = Intent(this@QuestionMainActivity, PauseMenu::class.java)
+                startActivity(intent)
+            }
         }
 
         // Charger les données utilisateur depuis le stockage interne ou `assets`
@@ -136,7 +145,11 @@ class QuestionMainActivity : AppCompatActivity(), QuestionAdapter.Score {
         user?.let {
             // Update score
             binding.currentScore.text = it.score.toString()
+            binding.level.text = getString(R.string.niveau) + " " + it.level
         }
+
+        val bannerAds = BannerAds()
+        bannerAds.loadBannerAd(this, binding.bannerAd)
 
     }
 

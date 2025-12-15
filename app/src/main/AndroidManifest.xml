@@ -15,9 +15,13 @@
         android:theme="@style/Theme.SportBrains"
         tools:targetApi="31">
         <activity
+            android:name=".PauseMenu"
+            android:exported="false"
+            android:theme="@style/DialogTheme"/>
+        <activity
             android:name=".RecompenceQuotidienneActivity"
-            android:theme="@style/DialogTheme"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/DialogTheme" />
         <activity
             android:name=".TacheQuotidienActivity"
             android:exported="false"
@@ -78,13 +82,10 @@
         <activity
             android:name=".MainActivity"
             android:exported="false"
-            android:theme="@style/Theme.SportBrains" />
-
-        <!--AdMob AppId-->
+            android:theme="@style/Theme.SportBrains" /> <!-- AdMob AppId -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="@string/app_id_test"/>
-
+            android:value="@string/app_id_test" />
     </application>
 
 </manifest>

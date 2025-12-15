@@ -1,138 +1,177 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:background="@drawable/main_bg"
-android:padding="16dp"
-tools:context=".QuestMainActivity">
-
-<LinearLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_gradient_modern"
+    tools:context=".QuestMainActivity">
 
-    <!-- Bouton de retour -->
-    <ImageButton
-        android:id="@+id/backButton"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:background="@drawable/navy_menu_background"
-        android:src="@drawable/ic_back"
-        android:contentDescription="Retour"
-        android:padding="4dp"
-        android:layout_gravity="start"
-        app:tint="@color/black" />
-
-    <LinearLayout
-        android:id="@+id/shop"
-        android:layout_gravity="end"
-        android:layout_width="wrap_content"
-        android:layout_height="35dp"
-        android:background="@drawable/navy_background"
-        android:gravity="center"
-        android:layout_marginTop="-40dp"
-        android:layout_marginBottom="45dp"
-        android:orientation="horizontal"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp">
-
-        <ImageView
-            android:id="@+id/status"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/garnet" />
-
-        <TextView
-            android:id="@+id/currentScore"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
-            android:text="2000"
-            android:textColor="@color/white" />
-
-    </LinearLayout>
-
-    <!-- Titre principal -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/questTitre"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:textColor="#FFFFFF"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:layout_marginBottom="20dp" />
-
-    <!-- Bloc principal -->
-    <RelativeLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/progress_background"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
         android:padding="16dp">
 
-        <TextView
-            android:id="@+id/taskMainTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="@string/nombreQuetTerminer"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <ProgressBar
-            android:id="@+id/taskMainProgress"
-            style="?android:attr/progressBarStyleHorizontal"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="12dp"
-            android:layout_below="@id/taskMainTitle"
-            android:layout_marginTop="8dp"
-            android:backgroundTint="#444"
-            android:max="1"
-            android:progress="1"
-            android:progressTint="@color/greenb" />
-
-        <TextView
-            android:id="@+id/task_main_progress_text"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/taskMainProgress"
-            android:layout_marginTop="2dp"
-            android:layout_centerHorizontal="true"
-            android:text="12"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp" />
+            android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="4dp"
-            android:src="@drawable/coins" />
-    </RelativeLayout>
+            <!-- Header avec bouton retour et score -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="24dp">
 
-    <!-- Bloc tâche : RecyclerView -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingBottom="24dp">
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/backButton"
+                    style="@style/Widget.Material3.Button.IconButton"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:background="@drawable/bg_icon_button_modern"
+                    android:contentDescription="Retour"
+                    android:insetLeft="0dp"
+                    android:insetTop="0dp"
+                    android:insetRight="0dp"
+                    android:insetBottom="0dp"
+                    app:icon="@drawable/ic_back"
+                    app:iconGravity="textStart"
+                    app:iconPadding="0dp"
+                    app:iconTint="@color/text_primary" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/leaderView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingBottom="16dp" />
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1" />
 
-    </LinearLayout>
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/shop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="@android:color/transparent"
+                    app:strokeWidth="0dp">
 
-</LinearLayout>
-</ScrollView>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/bg_coin_container_modern"
+                        android:paddingStart="12dp"
+                        android:paddingTop="10dp"
+                        android:paddingEnd="12dp"
+                        android:paddingBottom="10dp">
+
+                        <ImageView
+                            android:id="@+id/status"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/garnet"
+                            android:contentDescription="Pièces" />
+
+                        <TextView
+                            android:id="@+id/currentScore"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="2000"
+                            android:textAppearance="@style/TextAppearance.SportBrains.Body"
+                            android:textColor="@color/white"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+            <!-- Titre principal -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/questTitre"
+                android:textAppearance="@style/TextAppearance.SportBrains.Headline"
+                android:textColor="@color/text_primary"
+                android:textSize="32sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_marginBottom="24dp" />
+
+            <!-- Card de progression principale -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="8dp"
+                app:cardBackgroundColor="@color/card_background">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:id="@+id/taskMainTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/nombreQuetTerminer"
+                        android:textAppearance="@style/TextAppearance.SportBrains.Label"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="14sp"
+                        android:layout_marginBottom="12dp" />
+
+                    <ProgressBar
+                        android:id="@+id/taskMainProgress"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="14dp"
+                        android:layout_marginBottom="8dp"
+                        android:max="1"
+                        android:progress="1"
+                        android:progressTint="@color/success"
+                        android:progressBackgroundTint="@color/surface_variant"
+                        android:background="@drawable/bg_progress_modern" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:id="@+id/task_main_progress_text"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="12"
+                            android:textAppearance="@style/TextAppearance.SportBrains.Title"
+                            android:textColor="@color/text_primary"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/coins"
+                            android:contentDescription="Pièces" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Liste des quêtes -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/leaderView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:paddingBottom="16dp" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

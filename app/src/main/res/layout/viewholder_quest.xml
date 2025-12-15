@@ -1,101 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:orientation="vertical"
-android:layout_margin="8dp"
-android:background="@drawable/navy_background"
-android:padding="12dp">
-
-<RelativeLayout
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <!-- Icône de tâche -->
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/icon_faith"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:src="@drawable/coins" />
-
-    <!-- Texte de tâche -->
-    <TextView
-        android:id="@+id/text_faith"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/icon_faith"
-        android:layout_marginStart="12dp"
-        android:text="Obtenir 20 foi"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:layout_alignTop="@id/icon_faith" />
-
-    <!-- Icône cadeau à droite -->
+    android:layout_height="wrap_content"
+    android:layout_marginStart="12dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginEnd="12dp"
+    android:layout_marginBottom="10dp"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="8dp"
+    app:cardBackgroundColor="@color/card_background"
+    app:strokeWidth="0dp"
+    app:strokeColor="@android:color/transparent">
 
     <LinearLayout
-        android:id="@+id/icon_gift"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="6dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginBottom="6dp"
-        android:background="@drawable/navy_background"
-        android:gravity="center"
         android:orientation="vertical"
-        android:padding="4dp">
+        android:padding="16dp">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/icon_gift1"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:padding="2dp"
-            android:src="@drawable/garnet" />
-
-        <TextView
-            android:id="@+id/recompence"
-            android:layout_width="wrap_content"
+        <!-- Ligne titre + récompense -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="100"
-            android:textColor="#FFFFFF" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <!-- Icône -->
+            <FrameLayout
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:background="@drawable/bg_circle_button">
+
+                <ImageView
+                    android:id="@+id/icon_faith"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="12dp"
+                    android:src="@drawable/coins"
+                    android:contentDescription="Icône tâche"
+                    android:scaleType="fitCenter" />
+            </FrameLayout>
+
+            <!-- Texte -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginStart="12dp">
+
+                <TextView
+                    android:id="@+id/text_faith"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Obtenir 20 foi"
+                    android:textAppearance="@style/TextAppearance.SportBrains.Body"
+                    android:textColor="@color/text_primary"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/text_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0/20"
+                    android:textAppearance="@style/TextAppearance.SportBrains.Label"
+                    android:textColor="@color/text_secondary" />
+            </LinearLayout>
+
+            <!-- Récompense -->
+            <LinearLayout
+                android:id="@+id/icon_gift"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:background="@drawable/bg_coin_container_modern">
+
+                <ImageView
+                    android:id="@+id/icon_gift1"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/garnet"
+                    android:contentDescription="Récompense"
+                    android:scaleType="fitCenter" />
+
+                <TextView
+                    android:id="@+id/recompence"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:text="100"
+                    android:textAppearance="@style/TextAppearance.SportBrains.Body"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Barre de progression -->
+        <ProgressBar
+            android:id="@+id/progress_faith"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="6dp"
+            android:max="20"
+            android:progress="1"
+            android:progressTint="@color/success"
+            android:progressBackgroundTint="@color/surface_variant"
+            android:background="@drawable/bg_progress_modern" />
+
     </LinearLayout>
-    <!-- Barre de progression -->
-    <ProgressBar
-        android:id="@+id/progress_faith"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="0dp"
-        android:layout_height="15dp"
-        android:layout_toEndOf="@id/icon_faith"
-        android:layout_toStartOf="@id/icon_gift"
-        android:layout_below="@id/text_faith"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="12dp"
-        android:progress="1"
-        android:max="20"
-        android:progressTint="@color/greenb"
-        android:backgroundTint="@color/black" />
-
-    <!-- Texte du score -->
-    <TextView
-        android:id="@+id/text_score"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/progress_faith"
-        android:layout_alignStart="@id/progress_faith"
-        android:layout_alignEnd="@id/progress_faith"
-        android:layout_marginTop="2dp"
-        android:gravity="center"
-        android:text="0/20"
-        android:textColor="#FFFFFF"
-        android:textSize="14sp" />
-
-</RelativeLayout>
-
-</LinearLayout>
-
+</com.google.android.material.card.MaterialCardView>
